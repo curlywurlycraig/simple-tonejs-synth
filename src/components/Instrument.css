@@ -1,0 +1,12 @@
+.InstrumentContainer {
+    background-color: #dddddd;
+    width: 300px;
+    height: 150px;
+}
+
+.InstrumentHeader {
+    background-color: #dd5555;
+    height: 50px;
+    color: #ffffff;
+    text-align: left;
+}
