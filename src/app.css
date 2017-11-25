@@ -1,0 +1,15 @@
+.AppContainer {
+    text-align: center;
+    background-color: #555555;
+}
+
+.AppHeader {
+    height: 50px;
+    background-color: #333333;
+}
+
+button {
+    background-color: transparent;
+    border-color: transparent;
+    outline-width: 0;
+}

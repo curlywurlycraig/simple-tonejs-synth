@@ -1,0 +1,1 @@
+export const TOGGLE_MUTED = 'TOGGLE_MUTED';

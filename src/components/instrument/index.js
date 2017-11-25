@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import './Instrument.css';
+import './styles.css';
 
 class Instrument extends Component {
   constructor(props) {
     super(props);
-
-    this.audioContext = props.context;
+    this.props = props;
   }
 
   handleClick(e) {
-    var oscillator = this.audioContext.createOscillator();
+    var oscillator = this.props.audio.context.createOscillator();
     oscillator.type = 'sine';
     oscillator.frequency.value = 300;
-    oscillator.connect(this.audioContext.destination);
+    oscillator.connect(this.props.audio.masterGainNode);
     oscillator.start();
   }
 
