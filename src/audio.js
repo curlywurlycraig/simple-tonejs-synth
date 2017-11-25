@@ -8,18 +8,6 @@ class Audio {
     this.masterGainNode.connect(this.context.destination);
   }
 
-  mute() {
-    this.masterGainNode.gain.value = 0;
-  }
-
-  unmute() {
-    this.masterGainNode.gain.value = 1;
-  }
-
-  isMuted() {
-    return this.masterGainNode.gain.value === 0;
-  }
-
   _createAudioContext() {
     if (!window.audioContextInstance) {
       window.AudioContext = window.AudioContext || window.webkitAudioContext;

@@ -1,7 +1,11 @@
-import { TOGGLE_MUTED } from './constants';
+import {INIT_AUDIO_MANAGER_PENDING, INIT_AUDIO_MANAGER_SUCCESS, TOGGLE_MUTED} from './constants';
 
 const defaultState = {
-  muted: false,
+  audio: {
+    muted: false,
+    manager: null,
+    state: null,
+  },
 };
 
 export default function reducer(prevState = defaultState, action) {
@@ -9,7 +13,27 @@ export default function reducer(prevState = defaultState, action) {
     case TOGGLE_MUTED:
       return {
         ...prevState,
-        muted: !prevState.muted,
+        audio: {
+          ...prevState.audio,
+          muted: !prevState.audio.muted,
+        }
+      };
+    case INIT_AUDIO_MANAGER_PENDING:
+      return {
+        ...prevState,
+        audio: {
+          ...prevState.audio,
+          state: 'pending',
+        }
+      };
+    case INIT_AUDIO_MANAGER_SUCCESS:
+      return {
+        ...prevState,
+        audio: {
+          ...prevState.audio,
+          state: 'success',
+          manager: action.audioManager,
+        },
       };
     default:
       return prevState;

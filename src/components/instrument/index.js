@@ -8,10 +8,10 @@ class Instrument extends Component {
   }
 
   handleClick(e) {
-    var oscillator = this.props.audio.context.createOscillator();
+    var oscillator = this.props.audioManager.context.createOscillator();
     oscillator.type = 'sine';
     oscillator.frequency.value = 300;
-    oscillator.connect(this.props.audio.masterGainNode);
+    oscillator.connect(this.props.audioManager.masterGainNode);
     oscillator.start();
   }
 
