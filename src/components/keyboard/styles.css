@@ -1,0 +1,18 @@
+.KeyboardContainer {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+
+}
+
+.KeyboardWhiteKey {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    background-color: white;
+    color: #888888;
+    height: 100%;
+    border: 1px solid #dddddd;
+    justify-content: center;
+    box-sizing: border-box;
+}

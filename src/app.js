@@ -30,6 +30,9 @@ class App extends Component {
         </div>
 
         <div className="AppWorkspace">
+        </div>
+
+        <div className="AppIntruments">
           <Instrument audioManager={this.props.audioManager} />
         </div>
       </div>

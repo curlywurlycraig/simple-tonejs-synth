@@ -26,16 +26,18 @@ class AudioManager extends React.Component {
       return;
     }
 
+    const context = nextProps.audioManager.context;
     const knownInstrumentIds = this.knownInstruments.map(instrument => instrument.id);
 
     nextProps.instruments.forEach(instrument => {
       if (knownInstrumentIds.indexOf(instrument.id) === -1) {
         // TODO: Create the oscillator according to some attributes
-        const oscillator = this.props.audioManager.context.createOscillator();
+        const oscillator = context.createOscillator();
         oscillator.type = 'sine';
-        oscillator.frequency.value = 300;
-        oscillator.connect(this.props.audioManager.masterGainNode);
+        oscillator.frequency.value = 300 + 10 * this.knownInstruments.length;
+        oscillator.connect(nextProps.audioManager.masterGainNode);
         oscillator.start();
+        oscillator.stop(context.currentTime + 1);
         console.log('added a new instrument');
 
         this.knownInstruments.push(instrument);

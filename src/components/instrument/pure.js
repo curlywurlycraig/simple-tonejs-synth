@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+
+import Keyboard from '../keyboard/pure';
 import './styles.css';
 
 class Instrument extends Component {
@@ -18,10 +20,10 @@ class Instrument extends Component {
           <p>Instrument</p>
         </div>
 
-        <div className="InstrumentBody">
-          <button onClick={this.handleClick.bind(this)}>
-            Click me.
-          </button>
+        <div className="InstrumentKeyboard">
+          <Keyboard
+            onClickKey={this.handleClick.bind(this)}
+          />
         </div>
 
       </div>

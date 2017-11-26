@@ -1,3 +1,7 @@
+body {
+    background-color: #222222;
+}
+
 button {
     background-color: transparent;
     border-color: transparent;
@@ -5,11 +9,23 @@ button {
 }
 
 .AppContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
     text-align: center;
     background-color: #555555;
 }
 
 .AppHeader {
+    display: flex;
     height: 50px;
     background-color: #333333;
+}
+
+.AppWorkspace {
+    flex-grow: 1;
+}
+
+.AppInstruments {
+
 }
