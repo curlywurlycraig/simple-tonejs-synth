@@ -1,0 +1,27 @@
+.AddInstrumentButtonContainer {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    width: 200px;
+    height: 200px;
+    box-sizing: border-box;
+}
+
+.AddInstrumentButtonBorder {
+    border: 5px dashed #aaaaaa;
+    margin: 10px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.AddInstrumentButtonBorder:hover {
+    background-color: rgba(255, 255, 255, .1);
+}
+
+.AddInstrumentButtonText {
+    font-size: 80px;
+    color: #aaaaaa;
+}

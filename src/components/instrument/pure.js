@@ -9,20 +9,23 @@ class Instrument extends Component {
     this.props = props;
   }
 
-  handleClick(e) {
-    this.props.createInstrument();
+  onKeyOn(keyIndex) {
+  }
+
+  onKeyOff(keyIndex) {
   }
 
   render() {
     return (
       <div className="InstrumentContainer">
         <div className="InstrumentHeader">
-          <p>Instrument</p>
+          <p className="InstrumentLabel">Instrument</p>
         </div>
 
         <div className="InstrumentKeyboard">
           <Keyboard
-            onClickKey={this.handleClick.bind(this)}
+            onKeyOn={this.onKeyOn.bind(this)}
+            onKeyOff={this.onKeyOff.bind(this)}
           />
         </div>
 

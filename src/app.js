@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Instrument from './components/instrument';
+import Instrument from './components/instrument/pure';
 import MutedToggle from './components/mutedToggle';
 import AudioManager from './components/audioManager';
 import './res/font-awesome/css/font-awesome.min.css';
 import './app.css';
-import {toggleMuted} from './store/actions';
+import {toggleMuted, createInstrument} from './store/actions';
 import {initialiseAudioManager} from './store/thunks';
+import AddInstrumentButton from './components/addInstrumentButton/pure';
 
 class App extends Component {
   constructor(props) {
@@ -15,6 +16,15 @@ class App extends Component {
   }
 
   componentDidMount() {
+  }
+
+  renderInstruments() {
+    return this.props.instruments.map(instrument => {
+      return <Instrument
+        audioManager={this.props.audioManager}
+        instrument={instrument}
+      />;
+    });
   }
 
   render() {
@@ -32,8 +42,11 @@ class App extends Component {
         <div className="AppWorkspace">
         </div>
 
-        <div className="AppIntruments">
-          <Instrument audioManager={this.props.audioManager} />
+        <div className="AppInstruments">
+          {this.renderInstruments()}
+          <AddInstrumentButton
+            onAddInstrumentClick={this.props.createInstrument}
+          />
         </div>
       </div>
     );
@@ -43,12 +56,14 @@ class App extends Component {
 const mapStateToProps = (state) => ({
   muted: state.audio.muted,
   audioManager: state.audio.manager,
+  instruments: state.audio.instruments,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleMuted: () => dispatch(toggleMuted()),
     initialiseAudioManager: () => dispatch(initialiseAudioManager()),
+    createInstrument: () => dispatch(createInstrument())
   }
 };
 

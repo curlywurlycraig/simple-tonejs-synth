@@ -1,7 +1,7 @@
 .InstrumentContainer {
     background-color: #dddddd;
     width: 300px;
-    height: 150px;
+    height: 200px;
     display: flex;
     flex-direction: column;
 }
@@ -11,10 +11,12 @@
     color: #ffffff;
     text-align: left;
     flex: 1;
-    padding-left: 10px;
+}
+
+.InstrumentLabel {
+    margin: 15px;
 }
 
 .InstrumentKeyboard {
-    flex-grow: 1;
-    flex: 2;
+    flex: 3;
 }

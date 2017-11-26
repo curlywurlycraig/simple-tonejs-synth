@@ -10,9 +10,25 @@
     display: flex;
     align-items: flex-end;
     background-color: white;
-    color: #888888;
+    color: #aaaaaa;
     height: 100%;
     border: 1px solid #dddddd;
     justify-content: center;
     box-sizing: border-box;
+
+    font-size: 12px;
+}
+
+.KeyboardWhiteKey__Pressed {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    background-color: #eeeeee;
+    color: #aaaaaa;
+    height: 100%;
+    border: 1px solid #dddddd;
+    justify-content: center;
+    box-sizing: border-box;
+
+    font-size: 12px;
 }
