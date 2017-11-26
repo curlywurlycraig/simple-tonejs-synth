@@ -1,36 +1,15 @@
-import React, { Component } from 'react';
-import './styles.css';
+import { connect } from 'react-redux';
 
-class Instrument extends Component {
-  constructor(props) {
-    super(props);
-    this.props = props;
+import Instrument from './pure.js';
+import { createInstrument } from '../../store/actions';
+
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createInstrument: () => dispatch(createInstrument())
   }
+};
 
-  handleClick(e) {
-    var oscillator = this.props.audioManager.context.createOscillator();
-    oscillator.type = 'sine';
-    oscillator.frequency.value = 300;
-    oscillator.connect(this.props.audioManager.masterGainNode);
-    oscillator.start();
-  }
-
-  render() {
-    return (
-      <div className="InstrumentContainer">
-        <div className="InstrumentHeader">
-          <p>Instrument</p>
-        </div>
-
-        <div className="InstrumentBody">
-          <button onClick={this.handleClick.bind(this)}>
-            Click me.
-          </button>
-        </div>
-
-      </div>
-    );
-  }
-}
-
-export default Instrument;
+export default connect(mapStateToProps, mapDispatchToProps)(Instrument);
