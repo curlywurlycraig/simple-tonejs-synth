@@ -8,7 +8,7 @@
 }
 
 .AddInstrumentButtonBorder {
-    border: 5px dashed #aaaaaa;
+    border: 5px dashed #555555;
     margin: 10px;
     flex: 1;
     display: flex;
@@ -19,9 +19,14 @@
 
 .AddInstrumentButtonBorder:hover {
     background-color: rgba(255, 255, 255, .1);
+    border: 5px dashed #aaaaaa;
 }
 
 .AddInstrumentButtonText {
     font-size: 80px;
+    color: #555555;
+}
+
+.AddInstrumentButtonBorder:hover .AddInstrumentButtonText {
     color: #aaaaaa;
 }

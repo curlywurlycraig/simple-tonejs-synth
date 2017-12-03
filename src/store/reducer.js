@@ -46,7 +46,8 @@ export default function reducer(prevState = defaultState, action) {
     case CREATE_INSTRUMENT:
       let highestId;
       if (Object.keys(prevState.audio.instruments).length) {
-        highestId = Math.max(Object.keys(prevState.audio.instruments));
+        const keysAsNumbers = Object.keys(prevState.audio.instruments).map(Number);
+        highestId = Math.max(...keysAsNumbers);
       } else {
         highestId = -1;
       }

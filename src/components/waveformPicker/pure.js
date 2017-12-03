@@ -7,7 +7,6 @@ function waveformPicker(props) {
       <a onClick={() => props.onSelectWaveform('triangle')}>T</a>
       <a onClick={() => props.onSelectWaveform('sawtooth')}>saw</a>
       <a onClick={() => props.onSelectWaveform('square')}>square</a>
-
     </div>
   );
 }
