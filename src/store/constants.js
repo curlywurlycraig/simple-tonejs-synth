@@ -4,3 +4,4 @@ export const INIT_AUDIO_MANAGER_SUCCESS = 'INIT_AUDIO_MANAGER_SUCCESS';
 export const CREATE_INSTRUMENT = 'CREATE_INSTRUMENT';
 export const NOTE_ON = 'NOTE_ON';
 export const NOTE_OFF = 'NOTE_OFF';
+export const SET_WAVEFORM = 'SET_WAVEFORM';

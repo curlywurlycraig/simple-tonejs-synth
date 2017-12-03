@@ -41,7 +41,7 @@ class AudioManager extends React.Component {
       if (isNewInstrument) {
         // TODO: Create the oscillator according to some attributes
         const oscillator = nextProps.audioManager.context.createOscillator();
-        oscillator.type = 'sine';
+        oscillator.type = instrument.waveform;
 
         // TODO: Don't set the frequency here, set it when there is a note update
         oscillator.frequency.value = 300 + 10 * knownInstrumentIds.length;
@@ -49,24 +49,36 @@ class AudioManager extends React.Component {
 
         this.knownInstruments[instrument.id] = {
           oscillator: oscillator,
-          note: null,
+          representation: {...instrument},
         };
       }
     });
   }
 
-  playNewNotes(nextProps) {
+  /**
+   * TODO This could absolutely be generalised
+   * @param nextProps
+   */
+  updateExistingOscillators(nextProps) {
     Object.values(nextProps.instruments).forEach(instrument => {
       const knownInstrument = this.knownInstruments[instrument.id];
-      if (instrument.note !== null && knownInstrument.note === null) {
+
+      // waveform changes
+      if (knownInstrument.representation.waveform !== instrument.waveform) {
+        knownInstrument.oscillator.type = instrument.waveform;
+        knownInstrument.representation.waveform = instrument.waveform;
+      }
+
+      // note changes
+      if (instrument.note !== null && knownInstrument.representation.note === null) {
         // TODO Set the frequency here. Will need to write a util to convert a note to a frequency
         knownInstrument.oscillator.frequency.value = convertNoteToFrequency(instrument.note);
         knownInstrument.oscillator.connect(nextProps.audioManager.masterGainNode);
-      } else if (instrument.note === null && knownInstrument.note !== null) {
+      } else if (instrument.note === null && knownInstrument.representation.note !== null) {
         knownInstrument.oscillator.disconnect(nextProps.audioManager.masterGainNode);
       }
 
-      knownInstrument.note = instrument.note;
+      knownInstrument.representation.note = instrument.note;
     });
   }
 
@@ -76,7 +88,7 @@ class AudioManager extends React.Component {
     }
 
     this.createNewOscillators(nextProps);
-    this.playNewNotes(nextProps);
+    this.updateExistingOscillators(nextProps);
 
     if (nextProps.isMuted) {
       nextProps.audioManager.masterGainNode.gain.value = 0;

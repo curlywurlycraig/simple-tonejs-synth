@@ -4,7 +4,7 @@ import {
   INIT_AUDIO_MANAGER_SUCCESS,
   TOGGLE_MUTED,
   NOTE_ON,
-  NOTE_OFF,
+  NOTE_OFF, SET_WAVEFORM,
 } from './constants';
 
 const defaultState = {
@@ -60,11 +60,12 @@ export default function reducer(prevState = defaultState, action) {
             [highestId + 1]: {
               id: highestId + 1,
               note: null,
+              waveform: 'sine',
             }
           }
         }
       };
-    case NOTE_ON: {
+    case NOTE_ON:
       return {
         ...prevState,
         audio: {
@@ -78,8 +79,7 @@ export default function reducer(prevState = defaultState, action) {
           }
         }
       };
-    }
-    case NOTE_OFF: {
+    case NOTE_OFF:
       return {
         ...prevState,
         audio: {
@@ -93,7 +93,20 @@ export default function reducer(prevState = defaultState, action) {
           }
         }
       };
-    }
+    case SET_WAVEFORM:
+      return {
+        ...prevState,
+        audio: {
+          ...prevState.audio,
+          instruments: {
+            ...prevState.audio.instruments,
+            [action.instrumentId]: {
+              ...prevState.audio.instruments[action.instrumentId],
+              waveform: action.waveform,
+            }
+          }
+        }
+      };
     default:
       return prevState;
   }

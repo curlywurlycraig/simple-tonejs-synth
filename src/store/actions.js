@@ -5,6 +5,7 @@ import {
   CREATE_INSTRUMENT,
   NOTE_ON,
   NOTE_OFF,
+  SET_WAVEFORM,
 } from './constants';
 
 export function toggleMuted() {
@@ -44,5 +45,13 @@ export function noteOff(instrumentId) {
   return {
     type: NOTE_OFF,
     instrumentId,
+  }
+}
+
+export function setWaveform(instrumentId, waveform) {
+  return {
+    type: SET_WAVEFORM,
+    instrumentId,
+    waveform,
   }
 }

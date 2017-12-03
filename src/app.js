@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Instrument from './components/instrument/pure';
-import MutedToggle from './components/mutedToggle';
+import MutedToggle from './components/mutedToggle/pure';
 import AudioManager from './components/audioManager';
 import './res/font-awesome/css/font-awesome.min.css';
 import './app.css';
-import {toggleMuted, createInstrument, noteOn, noteOff} from './store/actions';
+import {toggleMuted, createInstrument, noteOn, noteOff, setWaveform} from './store/actions';
 import {initialiseAudioManager} from './store/thunks';
 import AddInstrumentButton from './components/addInstrumentButton/pure';
 
@@ -20,11 +20,13 @@ class App extends Component {
 
   renderInstruments() {
     return Object.values(this.props.instruments).map(instrument => {
+      // TODO: Standardise this interface so that instruments can do all sorts of fancy stuff
       return <Instrument
         audioManager={this.props.audioManager}
         instrument={instrument}
         noteOn={note => this.props.noteOn(instrument.id, note)}
         noteOff={note => this.props.noteOff(instrument.id)}
+        onSelectWaveform={waveform => this.props.setWaveform(instrument.id, waveform)}
       />;
     });
   }
@@ -68,6 +70,7 @@ const mapDispatchToProps = (dispatch) => {
     createInstrument: () => dispatch(createInstrument()),
     noteOn: (instrumentId, note) => dispatch(noteOn(instrumentId, note)),
     noteOff: (instrumentId, note) => dispatch(noteOff(instrumentId)),
+    setWaveform: (instrumentId, waveform) => dispatch(setWaveform(instrumentId, waveform)),
   }
 };
 
