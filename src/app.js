@@ -6,7 +6,7 @@ import MutedToggle from './components/mutedToggle';
 import AudioManager from './components/audioManager';
 import './res/font-awesome/css/font-awesome.min.css';
 import './app.css';
-import {toggleMuted, createInstrument} from './store/actions';
+import {toggleMuted, createInstrument, noteOn, noteOff} from './store/actions';
 import {initialiseAudioManager} from './store/thunks';
 import AddInstrumentButton from './components/addInstrumentButton/pure';
 
@@ -23,6 +23,8 @@ class App extends Component {
       return <Instrument
         audioManager={this.props.audioManager}
         instrument={instrument}
+        noteOn={note => this.props.noteOn(instrument.id, note)}
+        noteOff={note => this.props.noteOff(instrument.id, note)}
       />;
     });
   }
@@ -63,7 +65,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     toggleMuted: () => dispatch(toggleMuted()),
     initialiseAudioManager: () => dispatch(initialiseAudioManager()),
-    createInstrument: () => dispatch(createInstrument())
+    createInstrument: () => dispatch(createInstrument()),
+    noteOn: (instrumentId, note) => dispatch(noteOn(instrumentId, note)),
+    noteOff: (instrumentId, note) => dispatch(noteOn(instrumentId, note)),
   }
 };
 

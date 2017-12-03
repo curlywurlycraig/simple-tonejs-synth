@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-import AudioManager from './components/audioManager';
 import App from './app';
 import './index.css';
 import reducer from './store/reducer';

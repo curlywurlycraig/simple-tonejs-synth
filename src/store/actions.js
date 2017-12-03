@@ -3,6 +3,8 @@ import {
   INIT_AUDIO_MANAGER_PENDING,
   INIT_AUDIO_MANAGER_SUCCESS,
   CREATE_INSTRUMENT,
+  NOTE_ON,
+  NOTE_OFF,
 } from './constants';
 
 export function toggleMuted() {
@@ -28,4 +30,20 @@ export function createInstrument() {
   return {
     type: CREATE_INSTRUMENT,
   };
+}
+
+export function noteOn(instrumentId, note) {
+  return {
+    type: NOTE_ON,
+    instrumentId,
+    note
+  }
+}
+
+export function noteOff(instrumentId, note) {
+  return {
+    type: NOTE_OFF,
+    instrumentId,
+    note
+  }
 }
