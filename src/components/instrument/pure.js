@@ -12,6 +12,7 @@ function Instrument(props) {
 
       <div className="InstrumentKeyboard">
         <Keyboard
+          octaveCount={9}
           onKeyOn={props.noteOn}
           onKeyOff={props.noteOff}
         />

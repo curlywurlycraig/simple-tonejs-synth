@@ -19,11 +19,11 @@ class App extends Component {
   }
 
   renderInstruments() {
-    return this.props.instruments.map(instrument => {
+    return Object.values(this.props.instruments).map(instrument => {
       return <Instrument
         audioManager={this.props.audioManager}
         instrument={instrument}
-        noteOn={note => this.props.noteOn(instrument.id, 0)}
+        noteOn={note => this.props.noteOn(instrument.id, note)}
         noteOff={note => this.props.noteOff(instrument.id)}
       />;
     });

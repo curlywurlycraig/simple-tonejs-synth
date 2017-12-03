@@ -12,7 +12,7 @@ const defaultState = {
     muted: false,
     manager: null,
     state: null,
-    instruments: [],
+    instruments: {},
   },
 };
 
@@ -44,56 +44,53 @@ export default function reducer(prevState = defaultState, action) {
         },
       };
     case CREATE_INSTRUMENT:
-      const highestId = prevState.audio.instruments.reduce((accumulator, instrument) => {
-        return Math.max(accumulator, instrument.id);
-      }, -1);
+      let highestId;
+      if (Object.keys(prevState.audio.instruments).length) {
+        highestId = Math.max(Object.keys(prevState.audio.instruments));
+      } else {
+        highestId = -1;
+      }
 
       return {
         ...prevState,
         audio: {
           ...prevState.audio,
-          instruments: [
+          instruments: {
             ...prevState.audio.instruments,
-            {
+            [highestId + 1]: {
               id: highestId + 1,
               note: null,
             }
-          ]
+          }
         }
       };
     case NOTE_ON: {
-      const newInstrumentsArray = prevState.audio.instruments.map(instrument => {
-        if (instrument.id === action.instrumentId) {
-          return {
-            ...instrument,
-            note: action.note,
-          };
-        }
-      });
-
       return {
         ...prevState,
         audio: {
           ...prevState.audio,
-          instruments: newInstrumentsArray,
+          instruments: {
+            ...prevState.audio.instruments,
+            [action.instrumentId]: {
+              ...prevState.audio.instruments[action.instrumentId],
+              note: action.note,
+            }
+          }
         }
       };
     }
     case NOTE_OFF: {
-      const newInstrumentsArray = prevState.audio.instruments.map(instrument => {
-        if (instrument.id === action.instrumentId) {
-          return {
-            ...instrument,
-            note: null,
-          };
-        }
-      });
-
       return {
         ...prevState,
         audio: {
           ...prevState.audio,
-          instruments: newInstrumentsArray,
+          instruments: {
+            ...prevState.audio.instruments,
+            [action.instrumentId]: {
+              ...prevState.audio.instruments[action.instrumentId],
+              note: null,
+            }
+          }
         }
       };
     }

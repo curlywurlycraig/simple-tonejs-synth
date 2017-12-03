@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import {initialiseAudioManager} from '../../store/thunks';
+import {convertNoteToFrequency} from '../../utils';
 
 /**
  * Doesn't render anything. The job of this component is to act as a controlled component wrapper around the
@@ -30,7 +31,7 @@ class AudioManager extends React.Component {
   createNewOscillators(nextProps) {
     const knownInstrumentIds = Object.keys(this.knownInstruments);
 
-    nextProps.instruments.forEach(instrument => {
+    Object.values(nextProps.instruments).forEach(instrument => {
       // TODO: Distinguish between oscillators and instruments. Instruments will have multiple oscillators.
       // Need to think about how these should be structured internally. I think we should basically track all known
       // instruments as a list of objects which themselves have a defined structure of oscillators. Basically
@@ -55,12 +56,11 @@ class AudioManager extends React.Component {
   }
 
   playNewNotes(nextProps) {
-    nextProps.instruments.forEach(instrument => {
+    Object.values(nextProps.instruments).forEach(instrument => {
       const knownInstrument = this.knownInstruments[instrument.id];
-      console.log('instrument note', instrument.note);
-      console.log('known instrument note ', knownInstrument.note);
       if (instrument.note !== null && knownInstrument.note === null) {
         // TODO Set the frequency here. Will need to write a util to convert a note to a frequency
+        knownInstrument.oscillator.frequency.value = convertNoteToFrequency(instrument.note);
         knownInstrument.oscillator.connect(nextProps.audioManager.masterGainNode);
       } else if (instrument.note === null && knownInstrument.note !== null) {
         knownInstrument.oscillator.disconnect(nextProps.audioManager.masterGainNode);
