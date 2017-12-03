@@ -40,6 +40,10 @@
     user-select: none;
 }
 
+.KeyboardWhiteKey--Pressed {
+    background-color: #eeeeee;
+}
+
 .KeyboardBlackKey {
     flex: 0 0 20px;
 
@@ -59,6 +63,10 @@
     cursor: default;
 }
 
+.KeyboardBlackKey--Pressed {
+    background-color: #333333;
+}
+
 .KeyboardBlackKey__Hidden {
     flex: 0 0 20px;
 
@@ -76,17 +84,4 @@
     opacity: 0;
 
     cursor: default;
-}
-
-.KeyboardWhiteKey__Pressed {
-    display: flex;
-    align-items: flex-end;
-    background-color: #eeeeee;
-    color: #aaaaaa;
-    height: 100%;
-    border: 1px solid #dddddd;
-    justify-content: center;
-    box-sizing: border-box;
-
-    font-size: 12px;
 }

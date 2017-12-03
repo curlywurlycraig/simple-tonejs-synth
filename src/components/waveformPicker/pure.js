@@ -30,7 +30,6 @@ function waveformPicker(props) {
     <div className="WaveformPickerContainer">
       {
         waveformOptions.map(waveformOption => {
-          console.log('wave form option ', waveformOption);
           const isCurrentlySelected = waveformOption.name === props.selectedWaveform;
 
           let className = "WaveformPickerOption";

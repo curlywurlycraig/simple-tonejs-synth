@@ -23,6 +23,7 @@ function Instrument(props) {
           octaveCount={9}
           onKeyOn={props.noteOn}
           onKeyOff={props.noteOff}
+          currentlyPlayingNote={props.currentlyPlayingNote}
         />
       </div>
 

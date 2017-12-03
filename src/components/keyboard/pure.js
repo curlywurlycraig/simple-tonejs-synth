@@ -32,8 +32,13 @@ class Keyboard extends React.PureComponent {
 
   displayWhiteKeys(octaveIndex) {
     return whiteNotes.map(noteName => {
+      let className = "KeyboardWhiteKey";
+      if (noteName + octaveIndex === this.props.currentlyPlayingNote) {
+        className += ' KeyboardWhiteKey--Pressed';
+      }
+
       return <a
-        className="KeyboardWhiteKey"
+        className={className}
         onMouseDown={() => this.props.onKeyOn(noteName + octaveIndex)}
         onMouseUp={() => this.props.onKeyOff(noteName + octaveIndex)}>
         { noteName + octaveIndex }
@@ -43,9 +48,13 @@ class Keyboard extends React.PureComponent {
 
   displayBlackKeys(octaveIndex) {
     return blackNotes.map(noteName => {
+      let className = "KeyboardBlackKey";
+      if (noteName + octaveIndex === this.props.currentlyPlayingNote) {
+        className += ' KeyboardBlackKey--Pressed';
+      }
       if (noteName) {
         return <a
-          className="KeyboardBlackKey"
+          className={className}
           onMouseDown={() => this.props.onKeyOn(noteName + octaveIndex)}
           onMouseUp={() => this.props.onKeyOff(noteName + octaveIndex)}>
         </a>
