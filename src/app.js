@@ -23,8 +23,8 @@ class App extends Component {
       return <Instrument
         audioManager={this.props.audioManager}
         instrument={instrument}
-        noteOn={note => this.props.noteOn(instrument.id, note)}
-        noteOff={note => this.props.noteOff(instrument.id, note)}
+        noteOn={note => this.props.noteOn(instrument.id, 0)}
+        noteOff={note => this.props.noteOff(instrument.id)}
       />;
     });
   }
@@ -67,7 +67,7 @@ const mapDispatchToProps = (dispatch) => {
     initialiseAudioManager: () => dispatch(initialiseAudioManager()),
     createInstrument: () => dispatch(createInstrument()),
     noteOn: (instrumentId, note) => dispatch(noteOn(instrumentId, note)),
-    noteOff: (instrumentId, note) => dispatch(noteOn(instrumentId, note)),
+    noteOff: (instrumentId, note) => dispatch(noteOff(instrumentId)),
   }
 };
 

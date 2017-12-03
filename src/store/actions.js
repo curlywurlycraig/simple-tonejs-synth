@@ -40,10 +40,9 @@ export function noteOn(instrumentId, note) {
   }
 }
 
-export function noteOff(instrumentId, note) {
+export function noteOff(instrumentId) {
   return {
     type: NOTE_OFF,
     instrumentId,
-    note
   }
 }

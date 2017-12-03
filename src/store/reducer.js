@@ -1,4 +1,11 @@
-import {CREATE_INSTRUMENT, INIT_AUDIO_MANAGER_PENDING, INIT_AUDIO_MANAGER_SUCCESS, TOGGLE_MUTED} from './constants';
+import {
+  CREATE_INSTRUMENT,
+  INIT_AUDIO_MANAGER_PENDING,
+  INIT_AUDIO_MANAGER_SUCCESS,
+  TOGGLE_MUTED,
+  NOTE_ON,
+  NOTE_OFF,
+} from './constants';
 
 const defaultState = {
   audio: {
@@ -49,10 +56,47 @@ export default function reducer(prevState = defaultState, action) {
             ...prevState.audio.instruments,
             {
               id: highestId + 1,
+              note: null,
             }
           ]
         }
       };
+    case NOTE_ON: {
+      const newInstrumentsArray = prevState.audio.instruments.map(instrument => {
+        if (instrument.id === action.instrumentId) {
+          return {
+            ...instrument,
+            note: action.note,
+          };
+        }
+      });
+
+      return {
+        ...prevState,
+        audio: {
+          ...prevState.audio,
+          instruments: newInstrumentsArray,
+        }
+      };
+    }
+    case NOTE_OFF: {
+      const newInstrumentsArray = prevState.audio.instruments.map(instrument => {
+        if (instrument.id === action.instrumentId) {
+          return {
+            ...instrument,
+            note: null,
+          };
+        }
+      });
+
+      return {
+        ...prevState,
+        audio: {
+          ...prevState.audio,
+          instruments: newInstrumentsArray,
+        }
+      };
+    }
     default:
       return prevState;
   }
