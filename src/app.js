@@ -27,6 +27,7 @@ class App extends Component {
         noteOn={note => this.props.noteOn(instrument.id, note)}
         noteOff={note => this.props.noteOff(instrument.id)}
         onSelectWaveform={waveform => this.props.setWaveform(instrument.id, waveform)}
+        selectedWaveform={instrument.waveform}
       />;
     });
   }

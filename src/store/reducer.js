@@ -4,7 +4,8 @@ import {
   INIT_AUDIO_MANAGER_SUCCESS,
   TOGGLE_MUTED,
   NOTE_ON,
-  NOTE_OFF, SET_WAVEFORM,
+  NOTE_OFF,
+  SET_WAVEFORM,
 } from './constants';
 
 const defaultState = {

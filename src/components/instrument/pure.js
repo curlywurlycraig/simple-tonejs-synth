@@ -10,7 +10,12 @@ function Instrument(props) {
       <div className="InstrumentHeader">
         <p className="InstrumentLabel">Instrument</p>
 
-        <WaveformPicker onSelectWaveform={props.onSelectWaveform} />
+        <div className="InstrumentHeaderSeparator"></div>
+
+        <WaveformPicker
+          onSelectWaveform={props.onSelectWaveform}
+          selectedWaveform={props.selectedWaveform}
+        />
       </div>
 
       <div className="InstrumentKeyboard">

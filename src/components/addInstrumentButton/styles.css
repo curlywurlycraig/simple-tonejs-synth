@@ -15,6 +15,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition-duration: 100ms;
 }
 
 .AddInstrumentButtonBorder:hover {

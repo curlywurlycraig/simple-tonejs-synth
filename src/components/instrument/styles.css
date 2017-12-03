@@ -11,6 +11,13 @@
     color: #ffffff;
     text-align: left;
     flex: 1;
+    display: flex;
+    align-items: center;
+    padding-right: 15px;
+}
+
+.InstrumentHeaderSeparator {
+    flex-grow: 1;
 }
 
 .InstrumentLabel {
