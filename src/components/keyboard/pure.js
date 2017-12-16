@@ -12,7 +12,7 @@ class Keyboard extends React.PureComponent {
     const whiteKeys = [];
     const blackKeys = [];
 
-    [...Array(this.props.octaveCount).keys()].map(octaveIndex => {
+    [...Array(this.props.octaveCount).keys()].forEach(octaveIndex => {
       whiteKeys.push(this.displayWhiteKeys(octaveIndex));
       blackKeys.push(this.displayBlackKeys(octaveIndex));
     });

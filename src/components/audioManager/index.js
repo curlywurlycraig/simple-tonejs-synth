@@ -39,12 +39,10 @@ class AudioManager extends React.Component {
       const isNewInstrument = !knownInstrumentIds[instrument.id];
 
       if (isNewInstrument) {
-        // TODO: Create the oscillator according to some attributes
         const oscillator = nextProps.audioManager.context.createOscillator();
         oscillator.type = instrument.waveform;
 
-        // TODO: Don't set the frequency here, set it when there is a note update
-        oscillator.frequency.value = 300 + 10 * knownInstrumentIds.length;
+        // we only start here, connection happens later
         oscillator.start();
 
         this.knownInstruments[instrument.id] = {
@@ -71,7 +69,6 @@ class AudioManager extends React.Component {
 
       // note changes
       if (instrument.note !== null && knownInstrument.representation.note === null) {
-        // TODO Set the frequency here. Will need to write a util to convert a note to a frequency
         knownInstrument.oscillator.frequency.value = convertNoteToFrequency(instrument.note);
         knownInstrument.oscillator.connect(nextProps.audioManager.masterGainNode);
       } else if (instrument.note === null && knownInstrument.representation.note !== null) {

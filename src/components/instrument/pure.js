@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Keyboard from '../keyboard/pure';
 import WaveformPicker from '../waveformPicker/pure';

@@ -41,7 +41,10 @@ function waveformPicker(props) {
             <a
               className={className}
               onClick={() => props.onSelectWaveform(waveformOption.name)}>
-              <img src={waveformOption.icon}/>
+              <img
+                alt={`${waveformOption.name} wave`}
+                src={waveformOption.icon}
+              />
             </a>
           );
         })

@@ -11,13 +11,6 @@ import {initialiseAudioManager} from './store/thunks';
 import AddInstrumentButton from './components/addInstrumentButton/pure';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-  }
-
   renderInstruments() {
     return Object.values(this.props.instruments).map(instrument => {
       // TODO: Standardise this interface so that instruments can do all sorts of fancy stuff
