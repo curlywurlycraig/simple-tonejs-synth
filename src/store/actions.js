@@ -1,5 +1,9 @@
 import {
   TOGGLE_MUTED,
+  ADD_RACK,
+  REMOVE_RACK,
+  ADD_UNIT,
+  ADD_NODE,
   INIT_AUDIO_MANAGER_PENDING,
   INIT_AUDIO_MANAGER_SUCCESS,
   CREATE_INSTRUMENT,
@@ -10,7 +14,37 @@ import {
 
 export function toggleMuted() {
   return {
-    type: TOGGLE_MUTED
+    type: TOGGLE_MUTED,
+  };
+}
+
+export function addRack() {
+  return {
+    type: ADD_RACK,
+  };
+}
+
+export function removeRack(index) {
+  return {
+    type: REMOVE_RACK,
+    index,
+  };
+}
+
+export function addUnit(rackIndex, unit) {
+  return {
+    type: ADD_UNIT,
+    rackIndex,
+    unit,
+  };
+}
+
+export function addNode(rackIndex, unitIndex, node) {
+  return {
+    type: ADD_NODE,
+    rackIndex,
+    unitIndex,
+    node,
   };
 }
 
