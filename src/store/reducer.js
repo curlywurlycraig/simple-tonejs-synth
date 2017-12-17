@@ -5,7 +5,11 @@ import {
   TOGGLE_MUTED,
   NOTE_ON,
   NOTE_OFF,
-  SET_WAVEFORM, ADD_RACK, REMOVE_RACK, ADD_UNIT, ADD_NODE,
+  SET_WAVEFORM,
+  ADD_RACK,
+  REMOVE_RACK,
+  ADD_UNIT,
+  ADD_NODE,
 } from './constants';
 
 const defaultState = {
