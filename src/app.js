@@ -11,12 +11,12 @@ import {initialiseAudioManager} from './store/thunks';
 import AddInstrumentButton from './components/addInstrumentButton/pure';
 
 class App extends Component {
-  renderInstruments() {
-    return Object.values(this.props.instruments).map(instrument => {
+  renderRacks() {
+    return Object.values(this.props.racks).map(rack => {
       // TODO: Standardise this interface so that instruments can do all sorts of fancy stuff
-      return <Instrument
+      return <Rack
         audioManager={this.props.audioManager}
-        instrument={instrument}
+        rack={rack}
         noteOn={note => this.props.noteOn(instrument.id, note)}
         noteOff={note => this.props.noteOff(instrument.id)}
         onSelectWaveform={waveform => this.props.setWaveform(instrument.id, waveform)}
@@ -41,10 +41,10 @@ class App extends Component {
         <div className="AppWorkspace">
         </div>
 
-        <div className="AppInstruments">
-          {this.renderInstruments()}
-          <AddInstrumentButton
-            onAddInstrumentClick={this.props.createInstrument}
+        <div className="AppRacks">
+          {this.renderRacks()}
+          <AddRackButton
+            onAddRackClick={this.props.addRack}
           />
         </div>
       </div>
