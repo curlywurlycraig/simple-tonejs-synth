@@ -1,57 +1,66 @@
 import reducer from './reducer';
-import {toggleMuted, addRack, removeRack, addUnit, addNode} from './actions';
+import {
+  toggleMuted,
+  addRack,
+  removeRack,
+  addUnit,
+  addNode
+} from './actions';
 
 describe('mute action', () => {
   it('sets the audio to muted when unmuted', () => {
     const prevState = {
       audio: {
-        muted: false,
-      },
-    };
-    
-    const state = reducer(prevState, toggleMuted());
-    
-    expect(state).toEqual({
-      audio: {
-        muted: true,
+        muted: false
       }
-    });
+    };
+
+    const state = reducer(prevState, toggleMuted());
+
+    expect(state)
+      .toEqual({
+        audio: {
+          muted: true
+        }
+      });
   });
 
   it('sets the audio to unmuted when muted', () => {
     const prevState = {
       audio: {
-        muted: true,
-      },
+        muted: true
+      }
     };
 
     const state = reducer(prevState, toggleMuted());
 
-    expect(state).toEqual({
-      audio: {
-        muted: false,
-      },
-    });
-  })
+    expect(state)
+      .toEqual({
+        audio: {
+          muted: false
+        }
+      });
+  });
 });
 
 describe('add rack action', () => {
   it('adds a new rack to the racks', () => {
     const prevState = {
       audio: {
-        racks: [],
-      },
+        racks: []
+      }
     };
 
     const state = reducer(prevState, addRack());
 
-    expect(state).toEqual({
-      audio: {
-        racks: [{
-          units: [],
-        }],
-      },
-    });
+    expect(state)
+      .toEqual({
+        audio: {
+          racks: [{
+            units: []
+          }]
+        }
+      });
   });
 });
 
@@ -60,23 +69,24 @@ describe('remove rack action', () => {
     const prevState = {
       audio: {
         racks: [{
-          units: [],
+          units: []
         }, {
-          units: [],
-        }],
+          units: []
+        }]
       },
     };
 
     const state = reducer(prevState, removeRack(1));
 
-    expect(state).toEqual({
-      audio: {
-        racks: [{
-          units: [],
-        }],
-      },
-    });
-  })
+    expect(state)
+      .toEqual({
+        audio: {
+          racks: [{
+            units: []
+          }]
+        }
+      });
+  });
 });
 
 describe('add unit to rack action', () => {
@@ -84,7 +94,7 @@ describe('add unit to rack action', () => {
     const prevState = {
       audio: {
         racks: [{
-          units: [],
+          units: []
         }]
       }
     };
@@ -94,21 +104,22 @@ describe('add unit to rack action', () => {
         gain: {
           type: 'gain',
           props: {
-            gain: 0.5,
-          },
-        },
-      },
+            gain: 0.5
+          }
+        }
+      }
     };
 
     const state = reducer(prevState, addUnit(0, newUnit));
 
-    expect(state).toEqual({
-      audio: {
-        racks: [{
-          units: [newUnit,]
-        }]
-      }
-    });
+    expect(state)
+      .toEqual({
+        audio: {
+          racks: [{
+            units: [newUnit, ]
+          }]
+        }
+      });
   });
 });
 
@@ -118,7 +129,7 @@ describe('add node to unit rack action', () => {
       audio: {
         racks: [{
           units: [{
-            nodes: {},
+            nodes: {}
           }]
         }]
       }
@@ -135,21 +146,22 @@ describe('add node to unit rack action', () => {
 
     const state = reducer(prevState, addNode(0, 0, newNode));
 
-    expect(state).toEqual({
-      audio: {
-        racks: [{
-          units: [{
-            nodes: {
-              gain: {
-                type: 'gain',
-                props: {
-                  gain: 0.5
+    expect(state)
+      .toEqual({
+        audio: {
+          racks: [{
+            units: [{
+              nodes: {
+                gain: {
+                  type: 'gain',
+                  props: {
+                    gain: 0.5
+                  }
                 }
               }
-            }
+            }]
           }]
-        }]
-      }
-    });
-  })
+        }
+      });
+  });
 });

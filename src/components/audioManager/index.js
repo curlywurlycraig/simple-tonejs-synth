@@ -19,64 +19,7 @@ class AudioManager extends React.Component {
 
     // not using this.state because I don't want to trigger shouldComponentUpdate
     // twice every time the props change.
-    this.knownInstruments = {};
-  }
-
-  /**
-   * Compares prevProps and nextProps and adds new oscillators if there have been any changes
-   *
-   * @param prevProps The props we had
-   * @param nextProps The props we have received and will update to
-   */
-  createNewOscillators(nextProps) {
-    const knownInstrumentIds = Object.keys(this.knownInstruments);
-
-    Object.values(nextProps.instruments).forEach(instrument => {
-      // TODO: Distinguish between oscillators and instruments. Instruments will have multiple oscillators.
-      // Need to think about how these should be structured internally. I think we should basically track all known
-      // instruments as a list of objects which themselves have a defined structure of oscillators. Basically
-      // a mirror representation of the final oscillator structure.
-      const isNewInstrument = !knownInstrumentIds[instrument.id];
-
-      if (isNewInstrument) {
-        const oscillator = nextProps.audioManager.context.createOscillator();
-        oscillator.type = instrument.waveform;
-
-        // we only start here, connection happens later
-        oscillator.start();
-
-        this.knownInstruments[instrument.id] = {
-          oscillator: oscillator,
-          representation: {...instrument},
-        };
-      }
-    });
-  }
-
-  /**
-   * TODO This could absolutely be generalised
-   * @param nextProps
-   */
-  updateExistingOscillators(nextProps) {
-    Object.values(nextProps.instruments).forEach(instrument => {
-      const knownInstrument = this.knownInstruments[instrument.id];
-
-      // waveform changes
-      if (knownInstrument.representation.waveform !== instrument.waveform) {
-        knownInstrument.oscillator.type = instrument.waveform;
-        knownInstrument.representation.waveform = instrument.waveform;
-      }
-
-      // note changes
-      if (instrument.note !== null && knownInstrument.representation.note === null) {
-        knownInstrument.oscillator.frequency.value = convertNoteToFrequency(instrument.note);
-        knownInstrument.oscillator.connect(nextProps.audioManager.masterGainNode);
-      } else if (instrument.note === null && knownInstrument.representation.note !== null) {
-        knownInstrument.oscillator.disconnect(nextProps.audioManager.masterGainNode);
-      }
-
-      knownInstrument.representation.note = instrument.note;
-    });
+    this.routingGraph = {nodes: []};
   }
 
   shouldComponentUpdate(nextProps) {
@@ -84,9 +27,9 @@ class AudioManager extends React.Component {
       return;
     }
 
-    this.createNewOscillators(nextProps);
-    this.updateExistingOscillators(nextProps);
+    updateRoutingGraph(this.routingGraph, nextProps.racks)
 
+    // TODO: Could probably encode this into updateRoutingGraph somehow
     if (nextProps.isMuted) {
       nextProps.audioManager.masterGainNode.gain.value = 0;
     } else {
