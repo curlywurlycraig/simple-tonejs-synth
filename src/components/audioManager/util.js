@@ -1,5 +1,3 @@
-import {convertNoteToFrequency} from '../../utils';
-
 /**
  * Given an audio routing graph and the json representation of an
  * audio routing graph, update the routing graph in place.
@@ -9,7 +7,14 @@ import {convertNoteToFrequency} from '../../utils';
  *       when it is known how to use Web Audio in Jest tests
  */
 export function updateRoutingGraph(actualGraph, reprGraph) {
-  updateNodeToRepresentation(actualGraph.outputNode, reprGraph.outputNode);
+  // construct a new output node if one exists
+  if (reprGraph.outputNode && Object.keys(reprGraph.outputNode).length !== 0) {
+    actualGraph.outputNode = updateNodeToRepresentation(
+      actualGraph.outputNode,
+      reprGraph.outputNode,
+      actualGraph.context
+    );
+  }
 
   reprGraph.racks.forEach(reprRack => {
     let actualRack = actualGraph.racks.find(actualRackCandidate => {
@@ -21,7 +26,7 @@ export function updateRoutingGraph(actualGraph, reprGraph) {
         id: reprRack.id,
         units: []
       };
-      actualGraph.racks[actualRack.id] = actualRack;
+      actualGraph.racks.push(actualRack);
     }
 
     reprRack.units.forEach(reprUnit => {
@@ -34,7 +39,7 @@ export function updateRoutingGraph(actualGraph, reprGraph) {
           id: reprUnit.id,
           nodes: {},
         };
-        actualRack.units[actualUnit.id] = actualUnit;
+        actualRack.units.push(actualUnit);
       }
 
       Object.keys(reprUnit.nodes).forEach(reprNodeKey => {
@@ -46,20 +51,24 @@ export function updateRoutingGraph(actualGraph, reprGraph) {
         const reprNode = reprUnit.nodes[reprNodeKey];
 
         if (!actualUnit.nodes[reprNodeKey]) {
-          actualUnit.nodes[reprNodeKey] = newNodeFromRepresentation(reprNode);
+          actualUnit.nodes[reprNodeKey] = {
+            ...reprNode,
+            _node: newNodeFromRepresentation(reprNode)
+          };
         }
       })
     })
   });
 }
 
-function updateNodeToRepresentation(routingGraphNode, nodeRepresentation) {
-  if (routingGraph.outputNode._node === undefined) {
-    routingGraph.outputNode = {...audioState.outputNode};
-    routingGraph.outputNode._node = newNodeFromRepresentation(
-      routingGraph.outputNode,
-      routingGraph.context
+function updateNodeToRepresentation(routingGraphNode, nodeRepresentation, context) {
+  if (routingGraphNode._node === undefined) {
+    const newRoutingGraphNode = {...nodeRepresentation};
+    newRoutingGraphNode._node = newNodeFromRepresentation(
+      nodeRepresentation,
+      context
     );
+    return newRoutingGraphNode
   }
 }
 
@@ -67,15 +76,40 @@ function newNodeFromRepresentation(nodeRepr, context) {
   switch (nodeRepr.type) {
     case 'gain':
       return updateNodeWithParams(new GainNode(context), nodeRepr.params);
+    case 'oscillator':
+      return updateNodeWithParams(new OscillatorNode(context), nodeRepr.params);
     default:
       return null;
   }
 }
 
 function updateNodeWithParams(node, params) {
-  for (key in params) {
+  for (var key in params) {
     node[key].value = params[key];
   }
 
   return node;
+}
+
+/**
+ * Creates a routing graph which is ready to accept population from a representation.
+ */
+function createInitialRoutingGraph() {
+  let context;
+
+  if (!window.audioContextInstance) {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+    if (window.AudioContext) {
+      context = new AudioContext();
+    } else {
+      throw new Error('Web Audio API is not supported');
+    }
+  }
+
+  return {
+    context,
+    racks: [],
+    outputNode: {}
+  };
 }

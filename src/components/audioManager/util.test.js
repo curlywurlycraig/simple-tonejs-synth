@@ -1,14 +1,18 @@
 import { updateRoutingGraph } from './util';
-
+import * as webAudioMocks from './webAudioMocks';
 /**
  * Tests that a json representation results in the appropriate
  * routing graph
  */
 describe('updateRoutingGraph', () => {
-  let audioContext;
+  const audioContext = null;
+
   beforeEach(() => {
-    audioContext = new window.AudioContext();
-  });
+    window.AudioContext = jest.fn();
+
+    window.GainNode = webAudioMocks.GainNode;
+    window.OscillatorNode = webAudioMocks.OscillatorNode
+  })
 
   it('does nothing when both are empty', () => {
     const routingGraph = {
@@ -25,7 +29,9 @@ describe('updateRoutingGraph', () => {
     updateRoutingGraph(routingGraph, audioState);
 
     expect(routingGraph).toEqual({
-      nodes: []
+      context: audioContext,
+      racks: [],
+      outputNode: {}
     });
   });
 
@@ -55,10 +61,11 @@ describe('updateRoutingGraph', () => {
     expect(routingGraph.outputNode._node.gain.value).toEqual(0.5);
   })
 
-  xit('adds a new oscillator node when a rack contains an oscillator', () => {
+  it('adds a new oscillator node when a rack contains an oscillator', () => {
     const routingGraph = {
       context: audioContext,
-      nodes: []
+      racks: [],
+      outputNode: {}
     };
 
     const audio = {
@@ -85,10 +92,16 @@ describe('updateRoutingGraph', () => {
 
     updateRoutingGraph(routingGraph, audio);
 
-    expect(routingGraph.nodes.length).toEqual(1);
-    expect(routingGraph.nodes[0]).toBeInstanceOf(OscillatorNode);
-    expect(routingGraph.nodes[0].frequency).toEqual(440);
-    expect(routingGraph.nodes[0].detune).toEqual(0);
-    expect(routingGraph.nodes[0].type).toEqual('triangle');
+    expect(routingGraph.racks.length).toEqual(1);
+    const newRack = routingGraph.racks[0];
+    expect(newRack.id).toEqual(audio.racks[0].id);
+    expect(newRack.units.length).toEqual(1);
+    const newUnit = newRack.units[0];
+    expect(Object.keys(newUnit.nodes).length).toEqual(1);
+    expect(newUnit.nodes.INPUT.type).toEqual('oscillator');
+    expect(newUnit.nodes.INPUT._node).toBeInstanceOf(OscillatorNode);
+    expect(newUnit.nodes.INPUT._node.frequency.value).toEqual(440);
+    expect(newUnit.nodes.INPUT._node.detune.value).toEqual(0);
+    expect(newUnit.nodes.INPUT._node.type.value).toEqual('triangle');
   });
 });
