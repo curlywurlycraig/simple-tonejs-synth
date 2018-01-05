@@ -4,44 +4,86 @@ import { updateRoutingGraph } from './util';
  * Tests that a json representation results in the appropriate
  * routing graph
  */
-describe('updateRoutingGraph', function() {
-  it('does nothing when both are empty', function() {
+describe('updateRoutingGraph', () => {
+  let audioContext;
+  beforeEach(() => {
+    audioContext = new window.AudioContext();
+  });
+
+  it('does nothing when both are empty', () => {
     const routingGraph = {
-      nodes: []
+      context: audioContext,
+      racks: [],
+      outputNode: {}
     };
 
-    const racks = [];
+    const audioState = {
+      racks: [],
+      outputNode: {}
+    };
 
-    updateRoutingGraph(routingGraph, racks);
+    updateRoutingGraph(routingGraph, audioState);
 
     expect(routingGraph).toEqual({
       nodes: []
     });
   });
 
-  it('adds a new oscillator node when a rack contains an oscillator', function() {
+  it('creates an output node when one does not exist', () => {
     const routingGraph = {
+      context: audioContext,
+      racks: [],
+      outputNode: {}
+    };
+
+    const audioState = {
+      racks: [],
+      outputNode: {
+        type: 'gain',
+        params: {
+          gain: 0.5
+        }
+      }
+    };
+
+    updateRoutingGraph(routingGraph, audioState);
+
+    expect(routingGraph.racks).toEqual([]);
+    expect(routingGraph.outputNode.type).toEqual(audioState.outputNode.type);
+    expect(routingGraph.outputNode.params).toEqual(audioState.outputNode.params);
+    expect(routingGraph.outputNode._node).toBeInstanceOf(GainNode);
+    expect(routingGraph.outputNode._node.gain.value).toEqual(0.5);
+  })
+
+  xit('adds a new oscillator node when a rack contains an oscillator', () => {
+    const routingGraph = {
+      context: audioContext,
       nodes: []
     };
 
-    const racks = [{
-      id: 1,
-      units: [{
+    const audio = {
+      racks: [{
         id: 1,
-        nodes: {
-          INPUT: {
-            type: 'oscillator',
-            params: {
-              frequency: 440,
-              detune: 0,
-              type: 'triangle'
+        units: [{
+          id: 1,
+          nodes: {
+            INPUT: {
+              type: 'oscillator',
+              params: {
+                frequency: 440,
+                detune: 0,
+                type: 'triangle'
+              }
             }
           }
-        }
-      }]
-    }];
+        }],
+      }],
+      outputNode: {
+        gain: 0.5,
+      },
+    };
 
-    updateRoutingGraph(routingGraph, racks);
+    updateRoutingGraph(routingGraph, audio);
 
     expect(routingGraph.nodes.length).toEqual(1);
     expect(routingGraph.nodes[0]).toBeInstanceOf(OscillatorNode);
