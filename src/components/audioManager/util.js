@@ -72,6 +72,23 @@ function updateNodeToRepresentation(routingGraphNode, nodeRepresentation, contex
   }
 }
 
+/**
+ * TODO: Consider actually having the constructor as part of the redux state
+ *
+ * i.e. the nodeRepr could contain:
+ * {
+ *   nodeConstructor: GainNode
+ * }
+ *
+ * and then this function can simply call nodeRepr.nodeConstructor(context).
+ *
+ * Probably not worth it though, because this list of nodes won't really grow.
+ *
+ * Challenge the above though! What about custom node types? Baby steps.
+ *
+ * @param {*} nodeRepr
+ * @param {*} context
+ */
 function newNodeFromRepresentation(nodeRepr, context) {
   switch (nodeRepr.type) {
     case 'gain':
