@@ -3,6 +3,8 @@ export class GainNode {
     this.gain = {
       value: 1
     };
+
+    this.connect = jest.fn();
   }
 }
 
@@ -19,5 +21,7 @@ export class OscillatorNode {
     this.detune = {
       value: 0
     };
+
+    this.connect = jest.fn();
   }
 }

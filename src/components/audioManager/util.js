@@ -29,7 +29,7 @@ export function updateRoutingGraph(actualGraph, reprGraph) {
       actualGraph.racks.push(actualRack);
     }
 
-    reprRack.units.forEach(reprUnit => {
+    reprRack.units.forEach((reprUnit, reprUnitIndex) => {
       let actualUnit = actualRack.units.find(actualUnitCandidate => {
         actualUnitCandidate.id === reprUnit.id;
       });
@@ -55,6 +55,13 @@ export function updateRoutingGraph(actualGraph, reprGraph) {
             ...reprNode,
             _node: newNodeFromRepresentation(reprNode)
           };
+        }
+
+        // TODO: Pull out 'OUTPUT' etc into constants and be consistent.
+        // Formulate a model for node names!
+        // The last unit of a rack should connect its output to the outputNode
+        if (reprNode.connectedTo === 'OUTPUT' && reprUnitIndex === reprRack.units.length - 1) {
+          actualUnit.nodes[reprNodeKey]._node.connect(actualGraph.outputNode._node);
         }
       })
     })

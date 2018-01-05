@@ -86,7 +86,10 @@ describe('updateRoutingGraph', () => {
         }],
       }],
       outputNode: {
-        gain: 0.5,
+        type: 'gain',
+        params: {
+          gain: 0.5
+        }
       },
     };
 
@@ -103,5 +106,56 @@ describe('updateRoutingGraph', () => {
     expect(newUnit.nodes.INPUT._node.frequency.value).toEqual(440);
     expect(newUnit.nodes.INPUT._node.detune.value).toEqual(0);
     expect(newUnit.nodes.INPUT._node.type.value).toEqual('triangle');
+  });
+
+  it('connects the output node of the last unit to the master gain node', () => {
+    const routingGraph = {
+      context: audioContext,
+      racks: [],
+      outputNode: {}
+    };
+
+    const audio = {
+      racks: [{
+        id: 1,
+        units: [{
+          id: 1,
+          nodes: {
+            INPUT: {
+              type: 'oscillator',
+              params: {
+                frequency: 440,
+                detune: 0,
+                type: 'triangle'
+              },
+              connectedTo: 'OUTPUT'
+            }
+          }
+        }],
+      }],
+      outputNode: {
+        type: 'gain',
+        params: {
+          gain: 0.5
+        }
+      },
+    };
+
+    updateRoutingGraph(routingGraph, audio);
+
+    expect(routingGraph.racks[0].units[0].nodes.INPUT._node.connect)
+      .toHaveBeenCalledWith(routingGraph.outputNode._node);
+  })
+
+  xit('only connects the output of the last unit to the outputNode', () => {
+
+  });
+
+  xit('connects the outputNode to the context destination', () => {
+
+  });
+
+  xit('connects nodes to other nodes within the unit', () => {
+
   });
 });
