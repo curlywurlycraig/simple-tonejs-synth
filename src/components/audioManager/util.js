@@ -56,15 +56,25 @@ export function updateRoutingGraph(actualGraph, reprGraph) {
             _node: newNodeFromRepresentation(reprNode)
           };
         }
-
-        // TODO: Pull out 'OUTPUT' etc into constants and be consistent.
-        // Formulate a model for node names!
-        // The last unit of a rack should connect its output to the outputNode
-        if (reprNode.connectedTo === 'OUTPUT' && reprUnitIndex === reprRack.units.length - 1) {
-          actualUnit.nodes[reprNodeKey]._node.connect(actualGraph.outputNode._node);
-        }
       })
     })
+  });
+
+  actualGraph.racks.forEach(rack => {
+    rack.units.forEach((unit, unitIndex) => {
+      Object.keys(unit.nodes).forEach(nodeKey => {
+        const node = unit.nodes[nodeKey];
+        node.connectedTo.forEach(connectId => {
+          // TODO: Pull out 'OUTPUT' etc into constants and be consistent.
+          // Formulate a model for node names!
+          if (connectId === 'OUTPUT' && unitIndex === rack.units.length - 1) {
+            node._node.connect(actualGraph.outputNode._node);
+          } else if (connectId === 'OUTPUT') {
+            node._node.connect(rack.units[unitIndex + 1].nodes.INPUT._node);
+          }
+        })
+      })
+    });
   });
 }
 
