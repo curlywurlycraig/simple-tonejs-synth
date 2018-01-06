@@ -5,14 +5,11 @@ import * as webAudioMocks from './webAudioMocks';
  * routing graph
  */
 describe('updateRoutingGraph', () => {
-  const audioContext = null;
+  window.AudioContext = webAudioMocks.AudioContext;
+  window.GainNode = webAudioMocks.GainNode;
+  window.OscillatorNode = webAudioMocks.OscillatorNode;
 
-  beforeEach(() => {
-    window.AudioContext = jest.fn();
-
-    window.GainNode = webAudioMocks.GainNode;
-    window.OscillatorNode = webAudioMocks.OscillatorNode
-  })
+  const audioContext = new AudioContext();
 
   it('does nothing when both are empty', () => {
     const routingGraph = {
@@ -59,7 +56,32 @@ describe('updateRoutingGraph', () => {
     expect(routingGraph.outputNode.params).toEqual(audioState.outputNode.params);
     expect(routingGraph.outputNode._node).toBeInstanceOf(GainNode);
     expect(routingGraph.outputNode._node.gain.value).toEqual(0.5);
-  })
+  });
+
+  it('connects the outputNode to the context destination', () => {
+    const routingGraph = {
+      context: audioContext,
+      racks: [],
+      outputNode: {}
+    };
+
+    const audioState = {
+      racks: [],
+      outputNode: {
+        type: 'gain',
+        params: {
+          gain: 0.5
+        }
+      }
+    };
+
+    updateRoutingGraph(routingGraph, audioState);
+
+    expect(routingGraph.racks).toEqual([]);
+    expect(routingGraph.outputNode._node.connect).toHaveBeenCalledWith(
+      audioContext.destination
+    );
+  });
 
   it('adds a new oscillator node when a rack contains an oscillator', () => {
     const routingGraph = {
@@ -205,11 +227,71 @@ describe('updateRoutingGraph', () => {
       .toHaveBeenCalledWith(routingGraph.outputNode._node);
   });
 
-  xit('connects the outputNode to the context destination', () => {
+  it('connects nodes to other nodes within the unit', () => {
+    const routingGraph = {
+      context: audioContext,
+      racks: [],
+      outputNode: {}
+    };
 
-  });
+    const audio = {
+      racks: [{
+        id: 1,
+        units: [{
+          id: 1,
+          nodes: {
+            INPUT: {
+              type: 'oscillator',
+              params: {
+                frequency: 440,
+                detune: 0,
+                type: 'triangle'
+              },
+              connectedTo: ['intermediate']
+            },
+            intermediate: {
+              type: 'oscillator',
+              params: {
+                frequency: 440,
+                detune: 0,
+                type: 'triangle'
+              },
+              connectedTo: ['OUTPUT']
+            }
+          }
+        },
+        {
+          id: 2,
+          nodes: {
+            INPUT: {
+              type: 'oscillator',
+              params: {
+                frequency: 440,
+                detune: 0,
+                type: 'triangle'
+              },
+              connectedTo: ['OUTPUT']
+            }
+          }
+        }]
+      }],
+      outputNode: {
+        type: 'gain',
+        params: {
+          gain: 0.5
+        }
+      },
+    };
 
-  xit('connects nodes to other nodes within the unit', () => {
+    updateRoutingGraph(routingGraph, audio);
 
+    const firstUnit = routingGraph.racks[0].units[0];
+    const secondUnit = routingGraph.racks[0].units[1];
+    expect(firstUnit.nodes.INPUT._node.connect)
+      .toHaveBeenCalledWith(firstUnit.nodes.intermediate._node);
+    expect(firstUnit.nodes.intermediate._node.connect)
+      .toHaveBeenCalledWith(secondUnit.nodes.INPUT._node);
+    expect(secondUnit.nodes.INPUT._node.connect)
+      .toHaveBeenCalledWith(routingGraph.outputNode._node);
   });
 });

@@ -14,6 +14,10 @@ export function updateRoutingGraph(actualGraph, reprGraph) {
       reprGraph.outputNode,
       actualGraph.context
     );
+
+    if (actualGraph.outputNode._node) {
+      actualGraph.outputNode._node.connect(actualGraph.context.destination);
+    }
   }
 
   reprGraph.racks.forEach(reprRack => {
@@ -67,10 +71,13 @@ export function updateRoutingGraph(actualGraph, reprGraph) {
         node.connectedTo.forEach(connectId => {
           // TODO: Pull out 'OUTPUT' etc into constants and be consistent.
           // Formulate a model for node names!
+          // TODO: Error handling better. Inform the user and such
           if (connectId === 'OUTPUT' && unitIndex === rack.units.length - 1) {
             node._node.connect(actualGraph.outputNode._node);
           } else if (connectId === 'OUTPUT') {
             node._node.connect(rack.units[unitIndex + 1].nodes.INPUT._node);
+          } else if (connectId && unit.nodes[connectId]) {
+            node._node.connect(unit.nodes[connectId]._node);
           }
         })
       })

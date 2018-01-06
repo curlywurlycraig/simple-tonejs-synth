@@ -1,3 +1,9 @@
+export class AudioContext {
+  constructor() {
+    this.destination = {};
+  }
+}
+
 export class GainNode {
   constructor() {
     this.gain = {
