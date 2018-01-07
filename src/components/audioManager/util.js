@@ -2,7 +2,6 @@
  * Given an audio routing graph and the json representation of an
  * audio routing graph, update the routing graph in place.
  *
- * TODO: Remove old and create new racks, and units.
  * TODO: Substantially test the behaviour of this function
  *       when it is known how to use Web Audio in Jest tests
  */
@@ -22,7 +21,7 @@ export function updateRoutingGraph(actualGraph, reprGraph) {
 
   reprGraph.racks.forEach(reprRack => {
     let actualRack = actualGraph.racks.find(actualRackCandidate => {
-      actualRackCandidate.id === reprRack.id;
+      return actualRackCandidate.id === reprRack.id;
     });
 
     if (!actualRack) {
@@ -35,7 +34,7 @@ export function updateRoutingGraph(actualGraph, reprGraph) {
 
     reprRack.units.forEach((reprUnit, reprUnitIndex) => {
       let actualUnit = actualRack.units.find(actualUnitCandidate => {
-        actualUnitCandidate.id === reprUnit.id;
+        return actualUnitCandidate.id === reprUnit.id;
       });
 
       if (!actualUnit) {
@@ -53,13 +52,19 @@ export function updateRoutingGraph(actualGraph, reprGraph) {
         // TODO: There's a better way to iterate over key/value pairs of an object.
         // I'm sure MDN has something to say about it.
         const reprNode = reprUnit.nodes[reprNodeKey];
+        const actualNode = actualUnit.nodes[reprNodeKey];
 
-        if (!actualUnit.nodes[reprNodeKey]) {
-          actualUnit.nodes[reprNodeKey] = {
-            ...reprNode,
-            _node: newNodeFromRepresentation(reprNode)
-          };
+        let updatedNode;
+        if (!actualNode) {
+          updatedNode = newNodeFromRepresentation(reprNode)
+        } else {
+          updatedNode = updateNodeWithParams(actualNode._node, reprNode.params);
         }
+
+        actualUnit.nodes[reprNodeKey] = {
+          ...reprNode,
+          _node: updatedNode
+        };
       })
     })
   });
@@ -94,6 +99,8 @@ function updateNodeToRepresentation(routingGraphNode, nodeRepresentation, contex
     );
     return newRoutingGraphNode
   }
+
+  return routingGraphNode;
 }
 
 /**

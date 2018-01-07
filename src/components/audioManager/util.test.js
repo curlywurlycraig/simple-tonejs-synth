@@ -294,4 +294,81 @@ describe('updateRoutingGraph', () => {
     expect(secondUnit.nodes.INPUT._node.connect)
       .toHaveBeenCalledWith(routingGraph.outputNode._node);
   });
+
+  fit('updates node params when they have changed', () => {
+    const routingGraph = {
+      context: audioContext,
+      racks: [],
+      outputNode: {},
+    };
+
+    const firstAudio = {
+      racks: [{
+        id: 1,
+        units: [{
+          id: 1,
+          nodes: {
+            INPUT: {
+              type: 'oscillator',
+              params: {
+                frequency: 440,
+                detune: 0,
+                type: 'triangle'
+              },
+              connectedTo: ['intermediate']
+            }
+          }
+        }]
+      }],
+      outputNode: {
+        type: 'gain',
+        params: {
+          gain: 0.5
+        }
+      },
+    };
+
+    updateRoutingGraph(routingGraph, firstAudio);
+
+    expect(routingGraph.racks[0].units[0].nodes.INPUT.type).toEqual('oscillator');
+    expect(routingGraph.racks[0].units[0].nodes.INPUT.params).toEqual({
+      frequency: 440,
+      detune: 0,
+      type: 'triangle',
+    });
+
+    const secondAudio = {
+      racks: [{
+        id: 1,
+        units: [{
+          id: 1,
+          nodes: {
+            INPUT: {
+              type: 'oscillator',
+              params: {
+                frequency: 500,
+                detune: 10,
+                type: 'triangle'
+              },
+              connectedTo: ['intermediate']
+            }
+          }
+        }]
+      }],
+      outputNode: {
+        type: 'gain',
+        params: {
+          gain: 0.5
+        }
+      },
+    }
+
+    updateRoutingGraph(routingGraph, secondAudio);
+
+    expect(routingGraph.racks[0].units[0].nodes.INPUT.params).toEqual({
+      frequency: 500,
+      detune: 10,
+      type: 'triangle',
+    });
+  })
 });
