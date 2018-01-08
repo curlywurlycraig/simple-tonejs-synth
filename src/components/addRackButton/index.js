@@ -6,7 +6,7 @@ function AddRackButton(props) {
   return (
     <div className="AddRackButtonContainer">
       <div
-        onClick={props.onAddRackClick}
+        onClick={props.onClick}
         className="AddRackButtonBorder">
         <a
           className="AddRackButtonText"

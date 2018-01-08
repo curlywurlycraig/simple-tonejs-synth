@@ -20,12 +20,7 @@ class AudioManager extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.audioManagerStatus !== 'success') {
-      return;
-    }
-
     updateRoutingGraph(this.routingGraph, nextProps.reprGraph);
-
     return false; // we never actually want to render this
   }
 

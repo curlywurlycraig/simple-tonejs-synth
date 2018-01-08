@@ -7,42 +7,6 @@ import {
   addNode
 } from './actions';
 
-describe('mute action', () => {
-  it('sets the audio to muted when unmuted', () => {
-    const prevState = {
-      audio: {
-        muted: false
-      }
-    };
-
-    const state = reducer(prevState, toggleMuted());
-
-    expect(state)
-      .toEqual({
-        audio: {
-          muted: true
-        }
-      });
-  });
-
-  it('sets the audio to unmuted when muted', () => {
-    const prevState = {
-      audio: {
-        muted: true
-      }
-    };
-
-    const state = reducer(prevState, toggleMuted());
-
-    expect(state)
-      .toEqual({
-        audio: {
-          muted: false
-        }
-      });
-  });
-});
-
 describe('add rack action', () => {
   it('adds a new rack to the racks', () => {
     const prevState = {

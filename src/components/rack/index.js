@@ -5,14 +5,14 @@ import Unit from '../unit';
 import './styles.css';
 
 function Rack(props) {
-  const units = props.units.map(unit => (
+  const units = props.rack.units.map(unit => (
     <Unit unit={unit} />
   ));
 
   return (
     <div className='RackContainer'>
       { units }
-      <AddUnitButton />
+      <AddUnitButton onClick={props.onAddUnitClick} />
     </div>
   )
 }

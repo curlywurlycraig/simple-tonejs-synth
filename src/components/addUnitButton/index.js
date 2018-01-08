@@ -6,7 +6,7 @@ function AddUnitButton(props) {
   return (
     <div className="AddUnitButtonContainer">
       <div
-        onClick={props.onAddUnitClick}
+        onClick={props.onClick}
         className="AddUnitButtonBorder">
         <a
           className="AddUnitButtonText"

@@ -4,6 +4,9 @@ import Keyboard from '../keyboard/pure';
 import WaveformPicker from '../waveformPicker/pure';
 import './styles.css';
 
+/**
+ * TODO: Generalise
+ */
 function Unit(props) {
   return (
     <div className="UnitContainer">
