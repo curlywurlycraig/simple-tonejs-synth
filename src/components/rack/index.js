@@ -12,7 +12,7 @@ function Rack(props) {
   return (
     <div className='RackContainer'>
       { units }
-      <AddUnitButton onClick={props.onAddUnitClick} />
+      <AddUnitButton onClick={() => props.onAddUnitClick(unit.id, )} />
     </div>
   )
 }

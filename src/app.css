@@ -22,17 +22,10 @@ button {
     background-color: #333333;
 }
 
-.AppInstruments {
+.AppRacks {
     background-color: #222222;
     width: 100%;
     height: 200px;
     display: flex;
-}
-
-.AppWorkspace {
-    flex-grow: 1;
-}
-
-.AppInstruments {
-
+    flex-direction: row;
 }
