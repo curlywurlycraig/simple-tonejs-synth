@@ -1,4 +1,4 @@
-.AddInstrumentButtonContainer {
+.AddRackButtonContainer {
     display: flex;
     align-items: stretch;
     justify-content: stretch;
@@ -7,7 +7,7 @@
     box-sizing: border-box;
 }
 
-.AddInstrumentButtonBorder {
+.AddRackButtonBorder {
     border: 5px dashed #555555;
     margin: 10px;
     flex: 1;
@@ -18,16 +18,16 @@
     transition-duration: 100ms;
 }
 
-.AddInstrumentButtonBorder:hover {
+.AddRackButtonBorder:hover {
     background-color: rgba(255, 255, 255, .1);
     border: 5px dashed #aaaaaa;
 }
 
-.AddInstrumentButtonText {
+.AddRackButtonText {
     font-size: 80px;
     color: #555555;
 }
 
-.AddInstrumentButtonBorder:hover .AddInstrumentButtonText {
+.AddRackButtonBorder:hover .AddRackButtonText {
     color: #aaaaaa;
 }

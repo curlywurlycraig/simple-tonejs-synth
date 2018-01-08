@@ -4,13 +4,13 @@ import Keyboard from '../keyboard/pure';
 import WaveformPicker from '../waveformPicker/pure';
 import './styles.css';
 
-function Instrument(props) {
+function Unit(props) {
   return (
-    <div className="InstrumentContainer">
-      <div className="InstrumentHeader">
-        <p className="InstrumentLabel">Instrument</p>
+    <div className="UnitContainer">
+      <div className="UnitHeader">
+        <p className="UnitLabel">Instrument</p>
 
-        <div className="InstrumentHeaderSeparator"></div>
+        <div className="UnitHeaderSeparator"></div>
 
         <WaveformPicker
           onSelectWaveform={props.onSelectWaveform}
@@ -18,7 +18,7 @@ function Instrument(props) {
         />
       </div>
 
-      <div className="InstrumentKeyboard">
+      <div className="UnitKeyboard">
         <Keyboard
           octaveCount={9}
           onKeyOn={props.noteOn}
@@ -31,4 +31,4 @@ function Instrument(props) {
   );
 }
 
-export default Instrument;
+export default Unit;

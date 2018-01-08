@@ -142,7 +142,7 @@ function updateNodeWithParams(node, params) {
 /**
  * Creates a routing graph which is ready to accept population from a representation.
  */
-function createInitialRoutingGraph() {
+export function createInitialRoutingGraph() {
   let context;
 
   if (!window.audioContextInstance) {

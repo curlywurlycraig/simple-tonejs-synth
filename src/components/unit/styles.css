@@ -1,4 +1,4 @@
-.InstrumentContainer {
+.UnitContainer {
     background-color: #dddddd;
     width: 300px;
     height: 200px;
@@ -6,7 +6,7 @@
     flex-direction: column;
 }
 
-.InstrumentHeader {
+.UnitHeader {
     background-color: #dd5555;
     color: #ffffff;
     text-align: left;
@@ -16,14 +16,14 @@
     padding-right: 15px;
 }
 
-.InstrumentHeaderSeparator {
+.UnitHeaderSeparator {
     flex-grow: 1;
 }
 
-.InstrumentLabel {
+.UnitLabel {
     margin: 15px;
 }
 
-.InstrumentKeyboard {
+.UnitKeyboard {
     flex: 3;
 }

@@ -14,10 +14,8 @@ import {
 
 const defaultState = {
   audio: {
-    muted: false,
-    manager: null,
-    state: null,
     racks: [],
+    outputNode: {},
   },
 };
 
