@@ -71,7 +71,9 @@ function newNodeFromRepresentation(nodeRepr, context) {
     case 'oscillator': {
       const oscillator = new OscillatorNode(context);
       oscillator.type = nodeRepr.waveform;
-      return updateNodeWithParams(new OscillatorNode(context), nodeRepr.params);
+      updateNodeWithParams(oscillator, nodeRepr.params);
+      oscillator.start();
+      return oscillator;
     }
     default:
       return null;
