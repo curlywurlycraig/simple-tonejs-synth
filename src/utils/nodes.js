@@ -1,4 +1,4 @@
-export const createSineOscillator = frequency => {
+export function createSineOscillator(frequency) {
   return {
     type: 'oscillator',
     waveform: 'sine',
@@ -18,3 +18,15 @@ export const createGainNode = gain => {
     },
   }
 };
+
+export function createPartialOscillator(waveform, detune) {
+  return {
+    id: `${waveform}_${detune}`,
+    type: 'oscillator',
+    waveform,
+    params: {
+      detune,
+    },
+    connectedTo: ['OUTPUT'],
+  }
+}
