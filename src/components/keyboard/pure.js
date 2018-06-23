@@ -8,6 +8,17 @@ const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 const blackNotes = ['C#', 'D#', '', 'F#', 'G#', 'A#', ''];
 
 class Keyboard extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentlyPlayingNotes: [],
+    }
+
+    this.keyPressed = this.keyPressed.bind(this);
+    this.keyReleased = this.keyReleased.bind(this);
+  }
+
   render() {
     const whiteKeys = [];
     const blackKeys = [];
@@ -30,18 +41,40 @@ class Keyboard extends React.PureComponent {
     )
   }
 
+  keyPressed(note) {
+    const newNotes = [...this.state.currentlyPlayingNotes, note]
+    this.setState({
+      currentlyPlayingNotes: newNotes,
+    });
+
+    this.props.onKeyOn(note);
+  }
+
+  keyReleased(note) {
+    const newNotes = this.state.currentlyPlayingNotes.filter(n => {
+      return n !== note;
+    });
+    this.setState({
+      currentlyPlayingNotes: newNotes,
+    });
+
+    this.props.onKeyOff(note);
+  }
+
   displayWhiteKeys(octaveIndex) {
     return whiteNotes.map(noteName => {
       let className = "KeyboardWhiteKey";
-      if (noteName + octaveIndex === this.props.currentlyPlayingNote) {
+      const currentNote = noteName + octaveIndex;
+
+      if (this.state.currentlyPlayingNotes.includes(currentNote)) {
         className += ' KeyboardWhiteKey--Pressed';
       }
 
       return <a
         className={className}
-        onMouseDown={() => this.props.onKeyOn(noteName + octaveIndex)}
-        onMouseUp={() => this.props.onKeyOff(noteName + octaveIndex)}>
-        { noteName + octaveIndex }
+        onMouseDown={() => this.keyPressed(currentNote)}
+        onMouseUp={() => this.keyReleased(currentNote)}>
+        { currentNote }
       </a>
     })
   }
@@ -49,14 +82,17 @@ class Keyboard extends React.PureComponent {
   displayBlackKeys(octaveIndex) {
     return blackNotes.map(noteName => {
       let className = "KeyboardBlackKey";
-      if (noteName + octaveIndex === this.props.currentlyPlayingNote) {
+      const currentNote = noteName + octaveIndex;
+
+      if (this.state.currentlyPlayingNotes.includes(currentNote)) {
         className += ' KeyboardBlackKey--Pressed';
       }
+
       if (noteName) {
         return <a
           className={className}
-          onMouseDown={() => this.props.onKeyOn(noteName + octaveIndex)}
-          onMouseUp={() => this.props.onKeyOff(noteName + octaveIndex)}>
+          onMouseDown={() => this.keyPressed(currentNote)}
+          onMouseUp={() => this.keyReleased(currentNote)}>
         </a>
       } else {
         return <div className="KeyboardBlackKey__Hidden">

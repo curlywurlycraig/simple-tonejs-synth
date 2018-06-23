@@ -4,11 +4,7 @@ import { connect } from 'react-redux';
 import {createInitialRoutingGraph, updateRoutingGraph} from './util';
 
 /**
- * Doesn't render anything. The job of this component is to act as a controlled component wrapper around the
- * audio manager. Basically, it makes sure that the actual instance of the AudioContext is up-to-date with
- * the state coming from redux.
- *
- * Also I feel justified not making a pure component file for this one because it doesn't render anything.
+ * Outputs audio according to an audio graph object.
  *
  * https://developer.mozilla.org/en-US/docs/Web/API/AudioContext
  */
@@ -20,7 +16,7 @@ class AudioManager extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    updateRoutingGraph(this.routingGraph, nextProps.reprGraph);
+    updateRoutingGraph(this.routingGraph, nextProps.audioGraph);
     return false; // we never actually want to render this
   }
 
@@ -32,9 +28,4 @@ class AudioManager extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  reprGraph: state.audio,
-});
-
-const ConnectedAudioManager = connect(mapStateToProps)(AudioManager);
-export default ConnectedAudioManager;
+export default AudioManager;

@@ -111,7 +111,7 @@ const noteFrequencyMap = {
 
 const c3Index = Object.keys(noteFrequencyMap).indexOf('C3');
 
-export function convertNoteToFrequency(note) {
+export function getFrequencyFromNoteName(note) {
   return noteFrequencyMap[note];
 }
 

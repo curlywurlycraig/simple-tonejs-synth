@@ -1,50 +1,65 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import './res/font-awesome/css/font-awesome.min.css';
 import './app.css';
 import AudioManager from './components/audioManager';
-import AddRackButton from './components/addRackButton';
-import Rack from './components/rack';
-import { addRack, addUnit } from './store/actions';
+import Keyboard from './components/keyboard/pure';
+import AudioGraphEditor from './components/audioGraphEditor';
+import { createSineOscillator, createGainNode } from './utils/nodes';
+import { getFrequencyFromNoteName } from './utils/frequency';
 
 class App extends Component {
-  renderRacks() {
-    return Object.values(this.props.audio.racks).map(rack => {
-      return <Rack
-        onAddUnitClick={this.props.addUnit}
-        rack={rack}
-      />;
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      audioGraph: {
+        nodes: {},
+        outputNode: createGainNode(1),
+      },
+    };
+
+    this.noteOn = this.noteOn.bind(this);
+    this.noteOff = this.noteOff.bind(this);
+  }
+
+  noteOn(note) {
+    const newNodes = {
+      ...this.state.audioGraph.nodes,
+      [note]: createSineOscillator(getFrequencyFromNoteName(note)),
+    }
+
+    this.setState({
+      audioGraph: {
+        ...this.state.audioGraph,
+        nodes: newNodes,
+      }
+    });
+  }
+
+  noteOff(note) {
+    return;
+    const newNodes = this.state.audioGraph.nodes.filter(n => {
+      return n.id !== note;
+    });
+
+    this.setState({
+      audioGraph: {
+        ...this.state.audioGraph,
+        nodes: newNodes,
+      }
     });
   }
 
   render() {
     return (
       <div className="AppContainer">
-        <AudioManager></AudioManager>
+        <AudioManager audioGraph={this.state.audioGraph}></AudioManager>
 
-        <div className="AppRacks">
-          {this.renderRacks()}
-          <AddRackButton
-            onClick={this.props.addRack}
-          />
-        </div>
+        <AudioGraphEditor />
+        <Keyboard octaveCount={5} onKeyOn={this.noteOn} onKeyOff={this.noteOff} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  audio: state.audio,
-});
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addRack: () => dispatch(addRack()),
-    addUnit: (rackIndex, newUnit) => dispatch(addUnit()),
-  }
-};
-
-const connectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
-
-export default connectedApp;
+export default App;
