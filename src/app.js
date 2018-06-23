@@ -38,11 +38,10 @@ class App extends Component {
     };
 
     this.state.synthGraph.oscillators.forEach(oscillator => {
-      console.log('oscillator id is ', oscillator.id)
       const id = `${oscillator.id}_${note}`;
       newNodes[id] = {
-        id,
         ...oscillator,
+        id,
         params: {
           ...oscillator.params,
           frequency: getFrequencyFromNoteName(note),
@@ -55,8 +54,6 @@ class App extends Component {
         ...this.state.audioGraph,
         nodes: newNodes,
       }
-    }, () => {
-      console.log('audio graph nodes are ', this.state.audioGraph.nodes)
     });
   }
 
@@ -65,15 +62,12 @@ class App extends Component {
       return `${oscillator.id}_${note}`;
     });
 
-    console.log('removing ids ', removedIds);
-    console.log('existing nodes: ', this.state.audioGraph.nodes);
-
     const newNodes = {};
-    Object.keys(this.state.audioGraph.nodes).forEach(n => {
-      console.log('id to check is ', n.id);
+    Object.keys(this.state.audioGraph.nodes).forEach(nodeKey => {
+      const node = this.state.audioGraph.nodes[nodeKey];
 
-      if (!removedIds.includes(n.id)) {
-        newNodes[n] = this.state.audioGraph.nodes[n];
+      if (!removedIds.includes(node.id)) {
+        newNodes[nodeKey] = node;
       }
     });
 
