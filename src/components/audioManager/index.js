@@ -17,7 +17,6 @@ class AudioManager extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     updateRoutingGraph(this.routingGraph, nextProps.audioGraph);
-    console.log('this.routingGraph is ', this.routingGraph);
     return false; // we never actually want to render this
   }
 

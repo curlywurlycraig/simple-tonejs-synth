@@ -38,6 +38,12 @@ export function updateRoutingGraph(actualGraph, reprGraph) {
 
   Object.keys(actualGraph.nodes).forEach(nodeKey => {
     const node = actualGraph.nodes[nodeKey];
+
+    if (!reprGraph.nodes[nodeKey]) {
+      node._node.disconnect();
+      return;
+    }
+
     node.connectedTo.forEach(connectId => {
       // TODO: Pull out 'OUTPUT' etc into constants and be consistent.
       // Formulate a model for node names!

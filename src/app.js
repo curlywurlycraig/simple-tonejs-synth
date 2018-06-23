@@ -37,9 +37,11 @@ class App extends Component {
   }
 
   noteOff(note) {
-    return;
-    const newNodes = this.state.audioGraph.nodes.filter(n => {
-      return n.id !== note;
+    const newNodes = {};
+    Object.keys(this.state.audioGraph.nodes).forEach(n => {
+      if (n !== note) {
+        newNodes[n] = this.state.audioGraph.nodes[n];
+      }
     });
 
     this.setState({
