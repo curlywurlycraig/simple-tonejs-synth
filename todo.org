@@ -1,0 +1,8 @@
+* TODO Make a playstation 1 project using that sawtooth detune
+* TODO Reset the oscillators when they are stopped. Right now the phasing
+  continues even when the key is released
+* TODO Capture keyboard to play chords etc
+* TODO Side idea: one of those music boxes that reads paper with holes scrolling
+  from bottom of screen. Can load, share, save different ones and play some cute
+  sine wave plinky plonk sound
+* TODO Add background of wavy lines that grow in length with volume
