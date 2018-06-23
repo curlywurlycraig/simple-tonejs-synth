@@ -1,19 +1,15 @@
 .KeyboardContainer {
     height: 100%;
-    overflow-x: scroll;
     position: relative;
+    border: 30px solid #0e4e97;
+    display: flex;
+    flex: 1;
 }
 
 .KeyboardWhiteKeysContainer,
 .KeyboardBlackKeysContainer {
     display: flex;
     flex-direction: row;
-}
-
-.KeyboardWhiteKeysContainer {
-    height: 100%;
-    position: absolute;
-    top: 0;
 }
 
 .KeyboardBlackKeysContainer {
@@ -24,17 +20,11 @@
 }
 
 .KeyboardWhiteKey {
-    flex: 0 0 30px;
-    display: flex;
-    align-items: flex-end;
+    width: 30px;
     background-color: white;
-    color: #aaaaaa;
     height: 100%;
-    border: 1px solid #dddddd;
-    justify-content: center;
+    border: 1px solid #eeeeee;
     box-sizing: border-box;
-
-    font-size: 12px;
 
     cursor: default;
     user-select: none;

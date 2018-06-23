@@ -11,15 +11,19 @@ button {
 .AppContainer {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     height: 100vh;
     text-align: center;
-    background-color: #555555;
+    background-color: #2f82ff;
 }
 
 .GraphEditorContainer {
     flex: 3;
 }
 
-.KeyboardContainer {
-    flex: 1;
+.OutsideKeyboardContainer {
+    height: 200px;
+    top: 50%;
+    transform: translateY(-50%);
 }

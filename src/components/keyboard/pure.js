@@ -2,6 +2,8 @@ import React from 'react';
 
 import './styles.css';
 
+const DEFAULT_LOWEST_OCTAVE = 0;
+
 // note the empty string in the black notes. This is to just assist in drawing the gap where
 // there is no such note.
 const whiteNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
@@ -24,8 +26,9 @@ class Keyboard extends React.PureComponent {
     const blackKeys = [];
 
     [...Array(this.props.octaveCount).keys()].forEach(octaveIndex => {
-      whiteKeys.push(this.displayWhiteKeys(octaveIndex));
-      blackKeys.push(this.displayBlackKeys(octaveIndex));
+      const lowestOctave = this.props.lowestOctave || DEFAULT_LOWEST_OCTAVE;
+      whiteKeys.push(this.displayWhiteKeys(octaveIndex + lowestOctave));
+      blackKeys.push(this.displayBlackKeys(octaveIndex + lowestOctave));
     });
 
     return (
@@ -74,7 +77,6 @@ class Keyboard extends React.PureComponent {
         className={className}
         onMouseDown={() => this.keyPressed(currentNote)}
         onMouseUp={() => this.keyReleased(currentNote)}>
-        { currentNote }
       </a>
     })
   }
