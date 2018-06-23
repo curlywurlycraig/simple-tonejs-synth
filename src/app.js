@@ -57,8 +57,13 @@ class App extends Component {
       <div className="AppContainer">
         <AudioManager audioGraph={this.state.audioGraph}></AudioManager>
 
-        <AudioGraphEditor />
-        <Keyboard octaveCount={5} onKeyOn={this.noteOn} onKeyOff={this.noteOff} />
+        <div className="GraphEditorContainer">
+          <AudioGraphEditor />
+        </div>
+
+        <div className="KeyboardContainer">
+          <Keyboard octaveCount={7} onKeyOn={this.noteOn} onKeyOff={this.noteOff} />
+        </div>
       </div>
     );
   }
