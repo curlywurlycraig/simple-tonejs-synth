@@ -19,11 +19,11 @@ class App extends Component {
       synthGraph: {
         // TODO: Generate these based on the graph editor
         oscillators: [
-          createPartialOscillator('sawtooth', 12),
-          createPartialOscillator('sawtooth', 4),
-          createPartialOscillator('sawtooth', 8),
-          createPartialOscillator('sawtooth', -7),
-          createPartialOscillator('sawtooth', 0),
+          createPartialOscillator('triangle', 12),
+          createPartialOscillator('triangle', 4),
+          createPartialOscillator('triangle', 8),
+          createPartialOscillator('triangle', -7),
+          createPartialOscillator('triangle', 0),
         ],
       }
     };
@@ -89,7 +89,7 @@ class App extends Component {
         </div> */}
 
         <div className="OutsideKeyboardContainer">
-          <Keyboard lowestOctave={1} octaveCount={3} onKeyOn={this.noteOn} onKeyOff={this.noteOff} />
+          <Keyboard lowestOctave={4} octaveCount={3} onKeyOn={this.noteOn} onKeyOff={this.noteOff} />
         </div>
       </div>
     );
