@@ -5,13 +5,14 @@ import AudioManager from './components/audioManager';
 import Keyboard from './components/keyboard/pure';
 import AudioGraphEditor from './components/audioGraphEditor';
 import { createPartialOscillator, createGainNode } from './utils/nodes';
-import { getFrequencyFromNoteName } from './utils/frequency';
+import { getFrequencyFromNoteName, qwertyToKeyMap } from './utils/frequency';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      currentOctave: 5,
       audioGraph: {
         nodes: {},
         outputNode: createGainNode(1),
@@ -25,11 +26,17 @@ class App extends Component {
           createPartialOscillator('triangle', -7),
           createPartialOscillator('triangle', 0),
         ],
-      }
+      },
+      currentlyPlayingNotes: [],
     };
 
     this.noteOn = this.noteOn.bind(this);
     this.noteOff = this.noteOff.bind(this);
+  }
+
+  componentWillMount() {
+    document.addEventListener("keydown", this.keyPressed.bind(this));
+    document.addEventListener("keyup", this.keyReleased.bind(this));
   }
 
   noteOn(note) {
@@ -53,7 +60,11 @@ class App extends Component {
       audioGraph: {
         ...this.state.audioGraph,
         nodes: newNodes,
-      }
+      },
+      currentlyPlayingNotes: [
+        ...this.state.currentlyPlayingNotes,
+        note,
+      ]
     });
   }
 
@@ -75,13 +86,30 @@ class App extends Component {
       audioGraph: {
         ...this.state.audioGraph,
         nodes: newNodes,
-      }
+      },
+      currentlyPlayingNotes: this.state.currentlyPlayingNotes.filter(n => {
+        return n !== note;
+      }),
     });
+  }
+
+  keyPressed(e) {
+    const note = `${qwertyToKeyMap[e.key]}${this.state.currentOctave}`;
+    if (!note) return;
+
+    this.noteOn(note);
+  }
+
+  keyReleased(e) {
+    const note = `${qwertyToKeyMap[e.key]}${this.state.currentOctave}`;
+    if (!note) return;
+
+    this.noteOff(note);
   }
 
   render() {
     return (
-      <div className="AppContainer">
+      <div className="AppContainer" onKeyDown={this.keyPressed}>
         <AudioManager audioGraph={this.state.audioGraph}></AudioManager>
 
         {/* <div className="GraphEditorContainer">
@@ -89,7 +117,13 @@ class App extends Component {
         </div> */}
 
         <div className="OutsideKeyboardContainer">
-          <Keyboard lowestOctave={4} octaveCount={3} onKeyOn={this.noteOn} onKeyOff={this.noteOff} />
+          <Keyboard
+            lowestOctave={this.state.currentOctave}
+            octaveCount={3}
+            onKeyOn={this.noteOn}
+            onKeyOff={this.noteOff}
+            currentlyPlayingNotes={this.state.currentlyPlayingNotes}
+          />
         </div>
       </div>
     );

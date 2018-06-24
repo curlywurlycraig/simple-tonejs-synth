@@ -122,3 +122,18 @@ export function getFrequencyFromNoteName(note) {
 export function indexToKeyName(index) {
   return Object.keys(noteFrequencyMap)[c3Index + index];
 }
+
+export const qwertyToKeyMap = {
+  z: 'C',
+  s: 'C#',
+  x: 'D',
+  d: 'D#',
+  c: 'E',
+  v: 'F',
+  g: 'F#',
+  b: 'G',
+  h: 'G#',
+  n: 'A',
+  j: 'A#',
+  m: 'B',
+}

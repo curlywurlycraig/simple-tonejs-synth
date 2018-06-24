@@ -1,7 +1,6 @@
 .KeyboardContainer {
     height: 100%;
     position: relative;
-    border: 30px solid #0e4e97;
     display: flex;
     flex: 1;
 }
