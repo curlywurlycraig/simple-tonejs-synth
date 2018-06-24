@@ -94,15 +94,15 @@ class App extends Component {
   }
 
   keyPressed(e) {
+    if (!qwertyToKeyMap[e.key]) return;
     const note = `${qwertyToKeyMap[e.key]}${this.state.currentOctave}`;
-    if (!note) return;
 
     this.noteOn(note);
   }
 
   keyReleased(e) {
+    if (!qwertyToKeyMap[e.key]) return;
     const note = `${qwertyToKeyMap[e.key]}${this.state.currentOctave}`;
-    if (!note) return;
 
     this.noteOff(note);
   }
