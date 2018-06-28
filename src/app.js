@@ -20,11 +20,11 @@ class App extends Component {
       synthGraph: {
         // TODO: Generate these based on the graph editor
         oscillators: [
-          createPartialOscillator('triangle', 12),
+          createPartialOscillator('sine', 12),
           createPartialOscillator('triangle', 4),
-          createPartialOscillator('triangle', 8),
+          createPartialOscillator('sine', 8),
           createPartialOscillator('triangle', -7),
-          createPartialOscillator('triangle', 0),
+          createPartialOscillator('sine', 0),
         ],
       },
       currentlyPlayingNotes: [],
@@ -116,9 +116,9 @@ class App extends Component {
           <WavyBackground
             width={800}
             height={1000}
-            xSpacing={5}
+            xSpacing={80}
             amplitude={5}
-            wavelength={25}
+            wavelength={10}
           />
         </div>
 

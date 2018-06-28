@@ -1,10 +1,10 @@
 import React from "react";
+import "./styles.css";
 
 function createWavyD(width, height, xSpacing, wavelength, amplitude) {
   let d = '';
 
   const columnCount = Math.ceil(width / (xSpacing + amplitude));
-  console.log('column count is ', columnCount);
 
   for (let column = 0; column < columnCount; column++) {
     const xPos = column * (xSpacing + amplitude);
@@ -24,27 +24,28 @@ function createWavyD(width, height, xSpacing, wavelength, amplitude) {
   return d;
 }
 
-function wavyBackground(props) {
-  const {
-    width,
-    height,
-    dashLength,
-    xSpacing,
-    wavelength,
-    amplitude
-  } = props;
+class WavyBackground extends React.Component {
+  render() {
+    const {
+      width,
+      height,
+      dashLength,
+      xSpacing,
+      wavelength,
+      amplitude
+    } = this.props;
 
-  return (
-    <svg viewBox={`0 0 ${width} ${height}`}>
+    return (
+      <svg viewBox={`0 0 ${width} ${height}`}>
 
-      <path
-        fill="none"
-        stroke="rebeccapurple"
-        dashArray="4"
-        d={createWavyD(width, height, xSpacing, wavelength, amplitude)}
-      />
-    </svg>
-  );
+        <path
+          className="WavyBackgroundPath"
+          fill="none"
+          d={createWavyD(width, height, xSpacing, wavelength, amplitude)}
+        />
+      </svg>
+    );
+  }
 }
 
-export default wavyBackground;
+export default WavyBackground;

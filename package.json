@@ -5,8 +5,8 @@
   "dependencies": {
     "@types/react": "^16.0.2",
     "@types/react-dom": "^15.5.2",
-    "react": "^15.4.2",
-    "react-dom": "^15.6.1"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   },
   "devDependencies": {
     "react-scripts": "0.9.3",
