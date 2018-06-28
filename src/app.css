@@ -1,5 +1,5 @@
 body {
-    background-color: #222222;
+    background-color: #321a50;
 }
 
 button {
@@ -31,6 +31,7 @@ button {
     position: absolute;
     top: 0;
     left: 0;
-    width: 800px;
-    height: 600px;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
 }

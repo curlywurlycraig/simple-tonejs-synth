@@ -39,7 +39,7 @@ function wavyBackground(props) {
 
       <path
         fill="none"
-        stroke="#777777"
+        stroke="rebeccapurple"
         dashArray="4"
         d={createWavyD(width, height, xSpacing, wavelength, amplitude)}
       />

@@ -12,7 +12,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      currentOctave: 5,
+      currentOctave: 4,
       audioGraph: {
         nodes: {},
         outputNode: createGainNode(1),
@@ -115,10 +115,10 @@ class App extends Component {
         <div className="WavyBackground">
           <WavyBackground
             width={800}
-            height={600}
-            xSpacing={20}
-            amplitude={20}
-            wavelength={100}
+            height={1000}
+            xSpacing={5}
+            amplitude={5}
+            wavelength={25}
           />
         </div>
 
