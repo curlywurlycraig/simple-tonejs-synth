@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import './app.css';
 import AudioManager from './components/audioManager';
 import Keyboard from './components/keyboard/pure';
-import AudioGraphEditor from './components/audioGraphEditor';
 import { createPartialOscillator, createGainNode } from './utils/nodes';
 import { getFrequencyFromNoteName, qwertyToKeyMap } from './utils/frequency';
+import WavyBackground from './components/wavyBackground';
 
 class App extends Component {
   constructor(props) {
@@ -112,9 +112,15 @@ class App extends Component {
       <div className="AppContainer" onKeyDown={this.keyPressed}>
         <AudioManager audioGraph={this.state.audioGraph}></AudioManager>
 
-        {/* <div className="GraphEditorContainer">
-          <AudioGraphEditor />
-        </div> */}
+        <div className="WavyBackground">
+          <WavyBackground
+            width={800}
+            height={600}
+            xSpacing={20}
+            amplitude={20}
+            wavelength={100}
+          />
+        </div>
 
         <div className="OutsideKeyboardContainer">
           <Keyboard

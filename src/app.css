@@ -26,3 +26,11 @@ button {
     top: 50%;
     transform: translateY(-50%);
 }
+
+.WavyBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 800px;
+    height: 600px;
+}
