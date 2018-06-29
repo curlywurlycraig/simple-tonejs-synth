@@ -8,7 +8,7 @@ import {createInitialRoutingGraph, updateRoutingGraph} from './util';
  * https://developer.mozilla.org/en-US/docs/Web/API/AudioContext
  */
 class AudioManager extends React.Component {
-  componentDidMount() {
+  componentWillMount() {
     // not using this.state because I don't want to trigger shouldComponentUpdate
     // twice every time the props change.
     this.routingGraph = createInitialRoutingGraph();
