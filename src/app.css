@@ -23,8 +23,6 @@ button {
 
 .OutsideKeyboardContainer {
     height: 200px;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .WavyBackground {
