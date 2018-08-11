@@ -114,12 +114,12 @@ class AudioKeyboard extends React.Component {
         <AudioManager audioGraph={this.state.audioGraph}></AudioManager>
 
         <Keyboard
-              lowestOctave={this.state.currentOctave}
-              octaveCount={3}
-              onKeyOn={this.noteOn}
-              onKeyOff={this.noteOff}
-              currentlyPlayingNotes={this.state.currentlyPlayingNotes}
-            />
+          lowestOctave={this.state.currentOctave}
+          octaveCount={3}
+          onKeyOn={this.noteOn}
+          onKeyOff={this.noteOff}
+          currentlyPlayingNotes={this.state.currentlyPlayingNotes}
+        />
       </div>
     );
   }
