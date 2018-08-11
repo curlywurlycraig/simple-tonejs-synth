@@ -24,9 +24,20 @@
     height: 100%;
     border: 1px solid #eeeeee;
     box-sizing: border-box;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 
     cursor: default;
     user-select: none;
+}
+
+.KeyboardWhiteKey__Text {
+    opacity: .8;
+    border-radius: 4px;
+    background-color: #eee;
+    padding: 4px;
+    color: rgb(255, 113, 231);
 }
 
 .KeyboardWhiteKey--Pressed {
@@ -54,6 +65,14 @@
 
 .KeyboardBlackKey--Pressed {
     background-color: #333333;
+}
+
+.KeyboardBlackKey__Text {
+    opacity: .8;
+    border-radius: 4px;
+    background-color: rgb(61, 61, 61);
+    padding: 4px;
+    color: rgb(230, 189, 223);
 }
 
 .KeyboardBlackKey__Hidden {

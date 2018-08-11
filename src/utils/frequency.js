@@ -137,3 +137,8 @@ export const qwertyToKeyMap = {
   j: 'A#',
   m: 'B',
 }
+
+export const characterToNoteNameMap = Object.keys(qwertyToKeyMap).reduce((acc, key) => {
+  acc[qwertyToKeyMap[key]] = key;
+  return acc;
+}, {});

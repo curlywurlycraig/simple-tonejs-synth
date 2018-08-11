@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './styles.css';
+import { characterToNoteNameMap } from '../../utils/frequency';
 
 const DEFAULT_LOWEST_OCTAVE = 0;
 
@@ -46,6 +47,12 @@ class Keyboard extends React.PureComponent {
         className={className}
         onMouseDown={() => this.props.onKeyOn(currentNote)}
         onMouseUp={() => this.props.onKeyOff(currentNote)}>
+        {
+          octaveIndex === this.props.lowestOctave ?
+            <p className="KeyboardWhiteKey__Text">{characterToNoteNameMap[noteName]}</p>
+          :
+            null
+        }
       </a>
     })
   }
@@ -64,6 +71,12 @@ class Keyboard extends React.PureComponent {
           className={className}
           onMouseDown={() => this.props.onKeyOn(currentNote)}
           onMouseUp={() => this.props.onKeyOff(currentNote)}>
+          {
+            octaveIndex === this.props.lowestOctave ?
+              <p className="KeyboardBlackKey__Text">{characterToNoteNameMap[noteName]}</p>
+            :
+              null
+          }
         </a>
       } else {
         return <div className="KeyboardBlackKey__Hidden">
