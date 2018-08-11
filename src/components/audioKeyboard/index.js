@@ -1,9 +1,13 @@
 import React from "react";
 import AudioManager from '../audioManager';
 import Keyboard from '../keyboard/pure';
+import OctaveIndicator from '../octaveIndicator'
 import { createPartialOscillator, createGainNode } from '../../utils/nodes';
 import { qwertyToKeyMap, getFrequencyFromNoteName } from '../../utils/frequency'
 import './styles.css';
+
+const MIN_OCTAVES = 3;
+const MAX_OCTAVES = 6;
 
 /**
  * Self-contained keyboard with audio manager.
@@ -95,23 +99,37 @@ class AudioKeyboard extends React.Component {
   }
 
   keyPressed(e) {
-    if (!qwertyToKeyMap[e.key]) return;
-    const note = `${qwertyToKeyMap[e.key]}${this.state.currentOctave}`;
-
-    this.noteOn(note);
+    if (qwertyToKeyMap[e.key]) {
+      const note = `${qwertyToKeyMap[e.key]}${this.state.currentOctave}`;
+      this.noteOn(note);
+    } else if (e.key === "[" && this.state.currentOctave > MIN_OCTAVES) {
+      this.setState({
+        currentOctave: this.state.currentOctave - 1,
+      });
+    } else if (e.key === "]" && this.state.currentOctave < MAX_OCTAVES) {
+      this.setState({
+        currentOctave: this.state.currentOctave + 1,
+      });
+    }
   }
 
   keyReleased(e) {
-    if (!qwertyToKeyMap[e.key]) return;
-    const note = `${qwertyToKeyMap[e.key]}${this.state.currentOctave}`;
-
-    this.noteOff(note);
+    if (qwertyToKeyMap[e.key]) {
+      const note = `${qwertyToKeyMap[e.key]}${this.state.currentOctave}`;
+      this.noteOff(note);
+    }
   }
 
   render() {
     return (
       <div className="OutsideKeyboardContainer">
         <AudioManager audioGraph={this.state.audioGraph}></AudioManager>
+
+        <OctaveIndicator
+          currentOctave={this.state.currentOctave}
+          minOctave={MIN_OCTAVES}
+          maxOctave={MAX_OCTAVES}
+        />
 
         <Keyboard
           lowestOctave={this.state.currentOctave}
