@@ -5,10 +5,11 @@ function createWavyD(width, height, xSpacing, wavelength, amplitude) {
   let d = '';
 
   const columnCount = Math.ceil(width / (xSpacing + amplitude));
-
   for (let column = 0; column < columnCount; column++) {
+    const yRandomness = wavelength * 5;
+    const yStart = -1 * (Math.random() * yRandomness);
     const xPos = column * (xSpacing + amplitude);
-    let columnD = `M ${xPos},0
+    let columnD = `M ${xPos},${yStart}
       q ${amplitude},${wavelength/4} 0,${wavelength/2}
     `;
 

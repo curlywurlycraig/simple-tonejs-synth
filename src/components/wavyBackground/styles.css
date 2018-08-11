@@ -1,7 +1,7 @@
 .WavyBackgroundPath {
     stroke-dasharray: 50px;
     animation: dash-dance 5s infinite linear;
-    stroke: #de5454;
+    stroke: rgb(212, 85, 39);
 }
 
 @keyframes dash-dance {
