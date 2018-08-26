@@ -1,5 +1,6 @@
 body {
     background-color: rgb(43, 10, 58);
+    width: 100%;
 }
 
 button {
@@ -15,6 +16,12 @@ button {
     justify-content: center;
     height: 100vh;
     text-align: center;
+}
+
+@media(max-width: 700px) {
+    .AppContainer {
+        justify-content: flex-start;
+    }
 }
 
 .WavyBackground {

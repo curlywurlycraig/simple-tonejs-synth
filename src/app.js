@@ -5,14 +5,35 @@ import AudioKeyboard from './components/audioKeyboard';
 import WavyBackground from './components/wavyBackground';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.updateDimensions = this.updateDimensions.bind(this);
+
+    this.state = {
+      screenWidth: null,
+      screenHeight: null,
+    }
+  }
+
+  updateDimensions() {
+    this.setState({
+      screenWidth: window.innerWidth,
+      screenHeight: window.innerHeight,
+    });
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions);
+    this.updateDimensions()
+  }
 
   render() {
     return (
       <div className="AppContainer" onKeyDown={this.keyPressed}>
         <div className="WavyBackground">
           <WavyBackground
-            width={800}
-            height={1000}
+            width={this.state.screenWidth}
+            height={this.state.screenHeight}
             xSpacing={80}
             amplitude={5}
             wavelength={10}

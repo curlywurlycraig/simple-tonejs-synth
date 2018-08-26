@@ -30,7 +30,6 @@ class WavyBackground extends React.Component {
     const {
       width,
       height,
-      dashLength,
       xSpacing,
       wavelength,
       amplitude

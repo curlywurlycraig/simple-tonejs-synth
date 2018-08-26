@@ -1,5 +1,11 @@
 .OutsideKeyboardContainer {
-    height: 200px;
     display: flex;
     flex-direction: row;
+}
+
+@media(max-width: 700px) {
+    .OutsideKeyboardContainer {
+        width: 100%;
+        flex-direction: column;
+    }
 }

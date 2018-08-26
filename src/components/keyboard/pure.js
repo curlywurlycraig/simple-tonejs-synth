@@ -46,7 +46,9 @@ class Keyboard extends React.PureComponent {
       return <a
         className={className}
         onMouseDown={() => this.props.onKeyOn(currentNote)}
-        onMouseUp={() => this.props.onKeyOff(currentNote)}>
+        onTouchStart={() => this.props.onKeyOn(currentNote)}
+        onMouseUp={() => this.props.onKeyOff(currentNote)}
+        onTouchEnd={() => this.props.onKeyOff(currentNote)}>
         {
           octaveIndex === this.props.lowestOctave ?
             <p className="KeyboardWhiteKey__Text">{characterToNoteNameMap[noteName]}</p>
@@ -70,7 +72,9 @@ class Keyboard extends React.PureComponent {
         return <a
           className={className}
           onMouseDown={() => this.props.onKeyOn(currentNote)}
-          onMouseUp={() => this.props.onKeyOff(currentNote)}>
+          onTouchStart={() => this.props.onKeyOn(currentNote)}
+          onMouseUp={() => this.props.onKeyOff(currentNote)}
+          onTouchEnd={() => this.props.onKeyOff(currentNote)}>
           {
             octaveIndex === this.props.lowestOctave ?
               <p className="KeyboardBlackKey__Text">{characterToNoteNameMap[noteName]}</p>

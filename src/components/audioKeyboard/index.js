@@ -11,6 +11,12 @@ const MAX_OCTAVES = 6;
 
 /**
  * Self-contained keyboard with audio manager.
+ * The real reason for this is that I don't want the state changes to cause re-renders of the main application
+ * and thus recalculating random position values for the canvas wavy background. I know there are other ways
+ * around this but I want the re-render for the audio manager.
+ *
+ * I need to consider if tying the audio updates to the react render cycle is actually the sensible thing to do.
+ * I think it's kinda nifty personally but it could be a burden in the future.
  */
 class AudioKeyboard extends React.Component {
   constructor(props) {

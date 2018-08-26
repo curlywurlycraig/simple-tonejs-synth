@@ -23,7 +23,16 @@
     width: 20px;
 }
 
+@media(max-width: 700px) {
+    .OctaveIndicator__OuterContainer {
+        flex-direction: row;
+        width: 100px;
+        height: 20px;
+    }
+}
+
 .OctaveIndicator__Active {
     background-color: #b675ef;
     border: 5px solid #d8a4f7;
 }
+
