@@ -93,9 +93,3 @@
 
     cursor: default;
 }
-
-@media(max-width: 700px) {
-    .KeyboardContainer {
-        width: 10px;
-    }
-}
