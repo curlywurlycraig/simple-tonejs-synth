@@ -1,43 +1,29 @@
 import React from "react";
-import AudioManager from '../audioManager';
+import Tone from "tone";
 import Keyboard from '../keyboard/pure';
 import OctaveIndicator from '../octaveIndicator'
-import { createPartialOscillator, createGainNode } from '../../utils/nodes';
-import { qwertyToKeyMap, getFrequencyFromNoteName } from '../../utils/frequency'
+import { qwertyToKeyMap } from '../../utils/frequency'
 import './styles.css';
 
 const MIN_OCTAVES = 3;
 const MAX_OCTAVES = 6;
 
-/**
- * Self-contained keyboard with audio manager.
- * The real reason for this is that I don't want the state changes to cause re-renders of the main application
- * and thus recalculating random position values for the canvas wavy background. I know there are other ways
- * around this but I want the re-render for the audio manager.
- *
- * I need to consider if tying the audio updates to the react render cycle is actually the sensible thing to do.
- * I think it's kinda nifty personally but it could be a burden in the future.
- */
 class AudioKeyboard extends React.Component {
   constructor(props) {
     super(props);
 
+    const synth = new Tone.PolySynth(4, Tone.FMSynth).toMaster();
+    synth.set({
+      envelope: {
+        attack: 0.1,
+      },
+      modulationIndex: 10,
+    })
+    Tone.context.lookAhead = 0;
+
     this.state = {
+      synth,
       currentOctave: 4,
-      audioGraph: {
-        nodes: {},
-        outputNode: createGainNode(1),
-      },
-      synthGraph: {
-        // TODO: Generate these based on the graph editor
-        oscillators: [
-          createPartialOscillator('sine', 7),
-          createPartialOscillator('triangle', -6),
-          createPartialOscillator('sine', 8),
-          createPartialOscillator('triangle', -10),
-          createPartialOscillator('sine', 0),
-        ],
-      },
       currentlyPlayingNotes: [],
     };
 
@@ -51,27 +37,9 @@ class AudioKeyboard extends React.Component {
   }
 
   noteOn(note) {
-    const newNodes = {
-      ...this.state.audioGraph.nodes,
-    };
-
-    this.state.synthGraph.oscillators.forEach(oscillator => {
-      const id = `${oscillator.id}_${note}`;
-      newNodes[id] = {
-        ...oscillator,
-        id,
-        params: {
-          ...oscillator.params,
-          frequency: getFrequencyFromNoteName(note),
-        }
-      }
-    });
+    this.state.synth.triggerAttack(note)
 
     this.setState({
-      audioGraph: {
-        ...this.state.audioGraph,
-        nodes: newNodes,
-      },
       currentlyPlayingNotes: [
         ...this.state.currentlyPlayingNotes,
         note,
@@ -80,24 +48,9 @@ class AudioKeyboard extends React.Component {
   }
 
   noteOff(note) {
-    const removedIds = this.state.synthGraph.oscillators.map(oscillator => {
-      return `${oscillator.id}_${note}`;
-    });
-
-    const newNodes = {};
-    Object.keys(this.state.audioGraph.nodes).forEach(nodeKey => {
-      const node = this.state.audioGraph.nodes[nodeKey];
-
-      if (!removedIds.includes(node.id)) {
-        newNodes[nodeKey] = node;
-      }
-    });
+    this.state.synth.triggerRelease(note)
 
     this.setState({
-      audioGraph: {
-        ...this.state.audioGraph,
-        nodes: newNodes,
-      },
       currentlyPlayingNotes: this.state.currentlyPlayingNotes.filter(n => {
         return n !== note;
       }),
@@ -129,8 +82,6 @@ class AudioKeyboard extends React.Component {
   render() {
     return (
       <div className="OutsideKeyboardContainer">
-        <AudioManager audioGraph={this.state.audioGraph}></AudioManager>
-
         <OctaveIndicator
           currentOctave={this.state.currentOctave}
           minOctave={MIN_OCTAVES}
