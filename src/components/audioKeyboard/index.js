@@ -11,17 +11,22 @@ const MAX_OCTAVES = 6;
 class AudioKeyboard extends React.Component {
   constructor(props) {
     super(props);
+
     Tone.context.lookAhead = 0;
 
-    // const synth = new Tone.PolySynth(4, Tone.Synth).toMaster();
-    const synth = new Tone.AMSynth({
+    const synth = new Tone.PolySynth(4, Tone.Synth).toMaster();
+    synth.set({
+      oscillator: {
+        type: 'sine',
+      },
       envelope: {
         attack: 0,
         decay: 0,
         sustain: 1,
         release: 1,
       }
-    }).toMaster();
+    });
+
     this.state = {
       synth,
       currentOctave: 4,
