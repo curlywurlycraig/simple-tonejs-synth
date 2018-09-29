@@ -1,10 +1,10 @@
 .OctaveIndicator {
     width: 10px;
     height: 10px;
-    background-color: #644e77;
+    background-color: #a8c0f5;
     border-radius: 9999px;
     transition: all 0.1s ease-in-out;
-    border: 0px solid #d8a4f7;
+    border: 0px solid #92bfe4;
 }
 
 .OctaveIndicator__Container {
@@ -32,7 +32,7 @@
 }
 
 .OctaveIndicator__Active {
-    background-color: #b675ef;
-    border: 5px solid #d8a4f7;
+    background-color: #4da1f0;
+    border: 5px solid #68a5ff;
 }
 

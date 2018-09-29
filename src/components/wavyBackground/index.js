@@ -27,6 +27,8 @@ function createWavyD(width, height, xSpacing, wavelength, amplitude) {
 
 class WavyBackground extends React.Component {
   render() {
+    console.log("bg render")
+
     const {
       width,
       height,

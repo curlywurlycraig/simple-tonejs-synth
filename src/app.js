@@ -34,9 +34,9 @@ class App extends Component {
           <WavyBackground
             width={this.state.screenWidth}
             height={this.state.screenHeight}
-            xSpacing={80}
-            amplitude={5}
-            wavelength={10}
+            xSpacing={150}
+            amplitude={20}
+            wavelength={100}
           />
         </div>
 

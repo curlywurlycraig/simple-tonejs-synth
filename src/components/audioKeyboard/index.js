@@ -13,8 +13,15 @@ class AudioKeyboard extends React.Component {
     super(props);
     Tone.context.lookAhead = 0;
 
-    const synth = new Tone.PolySynth(4, Tone.Synth).toMaster();
-
+    // const synth = new Tone.PolySynth(4, Tone.Synth).toMaster();
+    const synth = new Tone.AMSynth({
+      envelope: {
+        attack: 0,
+        decay: 0,
+        sustain: 1,
+        release: 1,
+      }
+    }).toMaster();
     this.state = {
       synth,
       currentOctave: 4,
@@ -31,7 +38,7 @@ class AudioKeyboard extends React.Component {
   }
 
   noteOn(note) {
-    this.state.synth.triggerAttack(note)
+    this.state.synth.triggerAttackRelease(note, "0")
 
     this.setState({
       currentlyPlayingNotes: [
@@ -52,6 +59,10 @@ class AudioKeyboard extends React.Component {
   }
 
   keyPressed(e) {
+    if (e.repeat) {
+      return;
+    }
+
     if (qwertyToKeyMap[e.key]) {
       const note = `${qwertyToKeyMap[e.key]}${this.state.currentOctave}`;
       this.noteOn(note);

@@ -37,7 +37,7 @@
     border-radius: 4px;
     background-color: #eee;
     padding: 4px;
-    color: rgb(255, 113, 231);
+    color: rgb(113, 158, 255);
 }
 
 .KeyboardWhiteKey--Pressed {
@@ -72,7 +72,7 @@
     border-radius: 4px;
     background-color: rgb(61, 61, 61);
     padding: 4px;
-    color: rgb(230, 189, 223);
+    color: rgb(189, 210, 230);
 }
 
 .KeyboardBlackKey__Hidden {
