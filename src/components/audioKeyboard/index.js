@@ -1,8 +1,8 @@
 import React from "react";
 import Tone from "tone";
-import Keyboard from '../keyboard/pure';
+import Keyboard from '../keyboard';
 import OctaveIndicator from '../octaveIndicator'
-import { qwertyToKeyMap } from '../../utils/frequency'
+import { qwertyToKeyMap } from '../../utils/qwerty'
 import './styles.css';
 
 const MIN_OCTAVES = 3;
@@ -11,15 +11,9 @@ const MAX_OCTAVES = 6;
 class AudioKeyboard extends React.Component {
   constructor(props) {
     super(props);
-
-    const synth = new Tone.PolySynth(4, Tone.FMSynth).toMaster();
-    synth.set({
-      envelope: {
-        attack: 0.1,
-      },
-      modulationIndex: 10,
-    })
     Tone.context.lookAhead = 0;
+
+    const synth = new Tone.PolySynth(4, Tone.Synth).toMaster();
 
     this.state = {
       synth,
@@ -48,7 +42,7 @@ class AudioKeyboard extends React.Component {
   }
 
   noteOff(note) {
-    this.state.synth.triggerRelease(note)
+    this.state.synth.triggerRelease()
 
     this.setState({
       currentlyPlayingNotes: this.state.currentlyPlayingNotes.filter(n => {

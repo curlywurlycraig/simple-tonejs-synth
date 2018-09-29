@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './styles.css';
-import { characterToNoteNameMap } from '../../utils/frequency';
+import { characterToNoteNameMap } from '../../utils/qwerty';
 
 const DEFAULT_LOWEST_OCTAVE = 0;
 
