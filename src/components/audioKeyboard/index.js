@@ -12,20 +12,23 @@ class AudioKeyboard extends React.Component {
   constructor(props) {
     super(props);
 
-    Tone.context.lookAhead = 0;
+    Tone.context.lookAhead = 0.1;
 
-    const synth = new Tone.PolySynth(4, Tone.Synth).toMaster();
+    const limiter = new Tone.Limiter(-8).toMaster();
+    const synth = new Tone.PolySynth(16, Tone.Synth);
     synth.set({
       oscillator: {
         type: 'sine',
       },
       envelope: {
-        attack: 0,
+        attack: 0.001,
         decay: 0,
-        sustain: 1,
-        release: 1,
+        sustain: 0,
+        release: 0.4,
       }
     });
+
+    synth.connect(limiter);
 
     this.state = {
       synth,
@@ -43,7 +46,7 @@ class AudioKeyboard extends React.Component {
   }
 
   noteOn(note) {
-    this.state.synth.triggerAttackRelease(note, "0")
+    this.state.synth.triggerAttackRelease(note, 0.01)
 
     this.setState({
       currentlyPlayingNotes: [
