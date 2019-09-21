@@ -12,7 +12,7 @@ class AudioKeyboard extends React.Component {
   constructor(props) {
     super(props);
 
-    Tone.context.lookAhead = 0.1;
+    Tone.context.lookAhead = 0;
 
     const limiter = new Tone.Limiter(-8).toMaster();
     const synth = new Tone.PolySynth(16, Tone.Synth);
@@ -38,6 +38,7 @@ class AudioKeyboard extends React.Component {
 
     this.noteOn = this.noteOn.bind(this);
     this.noteOff = this.noteOff.bind(this);
+    this.setCurrentOctave = this.setCurrentOctave.bind(this);
   }
 
   componentWillMount() {
@@ -46,7 +47,7 @@ class AudioKeyboard extends React.Component {
   }
 
   noteOn(note) {
-    this.state.synth.triggerAttackRelease(note, 0.01)
+    this.state.synth.triggerAttackRelease(note, 0.01);
 
     this.setState({
       currentlyPlayingNotes: [
@@ -92,6 +93,12 @@ class AudioKeyboard extends React.Component {
     }
   }
 
+  setCurrentOctave(octave) {
+    this.setState({
+      currentOctave: octave,
+    });
+  }
+
   render() {
     return (
       <div className="OutsideKeyboardContainer">
@@ -99,6 +106,7 @@ class AudioKeyboard extends React.Component {
           currentOctave={this.state.currentOctave}
           minOctave={MIN_OCTAVES}
           maxOctave={MAX_OCTAVES}
+          onOctaveClick={this.setCurrentOctave.bind(this)}
         />
 
         <Keyboard

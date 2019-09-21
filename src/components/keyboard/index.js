@@ -46,9 +46,18 @@ class Keyboard extends React.PureComponent {
       return <a
         className={className}
         onMouseDown={() => this.props.onKeyOn(currentNote)}
-        onTouchStart={() => this.props.onKeyOn(currentNote)}
+        onTouchStart={e => {
+          // Don't allow the mouse event to fire on a touch screen, as it will play the sound twice.
+          this.props.onKeyOn(currentNote);
+          e.preventDefault();
+          e.stopPropagation();
+        }}
         onMouseUp={() => this.props.onKeyOff(currentNote)}
-        onTouchEnd={() => this.props.onKeyOff(currentNote)}>
+        onTouchEnd={e => {
+          this.props.onKeyOff(currentNote);
+          e.preventDefault();
+          e.stopPropagation();
+        }}>
         {
           octaveIndex === this.props.lowestOctave ?
             <p className="KeyboardWhiteKey__Text">{characterToNoteNameMap[noteName]}</p>
@@ -72,9 +81,18 @@ class Keyboard extends React.PureComponent {
         return <a
           className={className}
           onMouseDown={() => this.props.onKeyOn(currentNote)}
-          onTouchStart={() => this.props.onKeyOn(currentNote)}
+          onTouchStart={e => {
+            // Don't allow the mouse event to fire on a touch screen, as it will play the sound twice.
+            this.props.onKeyOn(currentNote);
+            e.preventDefault();
+            e.stopPropagation();
+          }}
           onMouseUp={() => this.props.onKeyOff(currentNote)}
-          onTouchEnd={() => this.props.onKeyOff(currentNote)}>
+          onTouchEnd={e => {
+            this.props.onKeyOff(currentNote);
+            e.preventDefault();
+            e.stopPropagation();
+          }}>
           {
             octaveIndex === this.props.lowestOctave ?
               <p className="KeyboardBlackKey__Text">{characterToNoteNameMap[noteName]}</p>

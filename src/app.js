@@ -29,7 +29,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="AppContainer" onKeyDown={this.keyPressed}>
+      <div className="AppContainer">
         <div className="WavyBackground">
           <WavyBackground
             width={this.state.screenWidth}
@@ -41,6 +41,10 @@ class App extends Component {
         </div>
 
         <AudioKeyboard />
+
+        <p className="OrientationWarning">
+          This wee app works best in landscape on a small mobile device.
+        </p>
       </div>
     );
   }
