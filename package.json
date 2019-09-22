@@ -2,6 +2,7 @@
   "name": "js-audio",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://crwi.uk/apps/synth",
   "dependencies": {
     "@types/react": "^16.0.2",
     "@types/react-dom": "^15.5.2",
