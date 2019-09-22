@@ -1,6 +1,0 @@
-* TODO Add background of wavy lines that grow in length with volume
-* TODO Display horizontally on mobile
-* TODO Show [ and ] labels for switching octaves
-* TODO Allow octave buttons to be clickable
-* TODO Set favicon and page title
-* TODO Find a good way to integrate apps into personal website
