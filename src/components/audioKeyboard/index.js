@@ -14,14 +14,14 @@ class AudioKeyboard extends React.Component {
 
     Tone.context.lookAhead = 0;
 
-    const limiter = new Tone.Limiter(-8).toMaster();
-    const synth = new Tone.PolySynth(16, Tone.Synth);
+    const limiter = new Tone.Limiter(-5).toMaster();
+    const synth = new Tone.PolySynth(16, Tone.Synth, { volume: -10 });
     synth.set({
       oscillator: {
         type: 'sine',
       },
       envelope: {
-        attack: 0.001,
+        attack: 0.01,
         decay: 0,
         sustain: 0,
         release: 0.4,
